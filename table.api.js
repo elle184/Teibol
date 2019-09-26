@@ -17,6 +17,7 @@ window.onload = function() {
         var totalCeldas = (typeof celdas == undefined) ? 0 : celdas.length;
 
         //Se crea una nueva fila
+        tableBody.appendChild(agregarFila());
 
         for (var c = 0; c < totalCeldas; c++) {
             /*
@@ -107,6 +108,8 @@ window.onload = function() {
      * Método encargado de la creación de un nuevo botón 
      * 
      * <button type="button" class="btnBorrar">Borrar</button>
+     * 
+     * @returns {HTMLElementTagNameMap}:    Retorna el objeto DOM de tipo button.
      */
     function crearBoton() {
         var boton = document.createElement("button");
@@ -120,9 +123,9 @@ window.onload = function() {
     /**
      * Método encargado de crear una nueva fila para un elemento table.
      * 
-     * @returns {HTMLElementTagNameMap}
+     * @returns {HTMLElementTagNameMap}:    Retorna el objeto DOM de tipo tr
      */
-    function crearFila() {
+    function agregarFila() {
         return document.createElement("tr");
     }
 
