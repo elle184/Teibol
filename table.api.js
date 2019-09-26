@@ -12,17 +12,11 @@ window.onload = function() {
      *    de la fila anterior.
      */
     function crearFila(evento) {
-        var boton = document.createElement("button");
-        var celdas = tabla.tBodies[0].rows[tabla.tBodies[0].rows.length - 2].cells;
+        var tableBody = tabla.tBodies[0];
+        var celdas = tableBody.rows[tableBody.rows.length - 2].cells;
         var totalCeldas = (typeof celdas == undefined) ? 0 : celdas.length;
 
-        /*
-         * Creación del botón 
-         * <button type="button" class="btnBorrar">Borrar</button>
-         */
-        boton.setAttribute("type", "button");
-        boton.setAttribute("class", "btnBorrar");
-        boton.innerHTML = "Borrar";
+        //Se crea una nueva fila
 
         for (var c = 0; c < totalCeldas; c++) {
             /*
@@ -30,13 +24,13 @@ window.onload = function() {
              * especial en la última celda de la última fila creada. 
              */
             if (c == (totalCeldas - 1)) {
-                tabla.tBodies[0].rows[tabla.tBodies[0].rows.length - 1]
+                tableBody.rows[tableBody.rows.length - 1]
                 .insertCell(c)
-                .appendChild(boton);
+                .appendChild(crearBoton());
             } else {
-                tabla.tBodies[0].rows[tabla.tBodies[0].rows.length - 1]
+                tableBody.rows[tableBody.rows.length - 1]
                 .insertCell(c)
-                .innerHTML = "Celda " + (tabla.tBodies[0].rows.length - 1) + " - " + c;
+                .innerHTML = "Celda " + (tableBody.rows.length - 1) + " - " + c;
             }
         }
 
@@ -60,28 +54,19 @@ window.onload = function() {
     /**
      * Método encargado de borrar una fila seleccionada.
      * 
-     * @param {*} evento 
+     * @param {MouseEvent} evento 
      */
     function borrarFila(evento) {
-        console.log(evento);
-        /*
-         * Se declara el ID de la primera fila. 
-         */
+        //Se declara el ID de la primera fila. 
         var primeraFila = 0;
         
-        /*
-         * Se declara el ID de la última fila.
-         */
+        //Se declara el ID de la última fila.
         var ultimaFila = tabla.tBodies[0].rows.length - 1;
         
-        /**
-         * Se obtiene el ID de la fila que se esta borrando.
-         */
+        //Se obtiene el ID de la fila que se esta borrando.
         var idFila = evento.srcElement.parentElement.parentElement.getAttribute("data-fila");
         
-        /*
-         * Se valida si se esta borrando la primera fila 
-         */
+        //Se valida si se esta borrando la primera fila 
         if (idFila == primeraFila) {
             console.log("Borrando la primera fila");
             //Se borra la fila
@@ -99,7 +84,6 @@ window.onload = function() {
         }
         
         if (idFila > primeraFila && idFila < ultimaFila) {
-            console.log("Borrando una fila del medio");
             tabla.tBodies[0].deleteRow(evento.srcElement.parentElement.parentElement.getAttribute("data-fila"));
             
             for (var i = idFila; i < ultimaFila; i++) {
@@ -119,6 +103,29 @@ window.onload = function() {
         }
     };
     
+    /**
+     * Método encargado de la creación de un nuevo botón 
+     * 
+     * <button type="button" class="btnBorrar">Borrar</button>
+     */
+    function crearBoton() {
+        var boton = document.createElement("button");
+        boton.setAttribute("type", "button");
+        boton.setAttribute("class", "btnBorrar");
+        boton.innerHTML = "Borrar";
+
+        return boton;
+    }
+
+    /**
+     * Método encargado de crear una nueva fila para un elemento table.
+     * 
+     * @returns {HTMLElementTagNameMap}
+     */
+    function crearFila() {
+        return document.createElement("tr");
+    }
+
     /*
      * A cada fila se le agrega un atributo de tipo dataset para identificar 
      * el número de fila en próximas validaciones. 
