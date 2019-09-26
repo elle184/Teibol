@@ -94,7 +94,8 @@ window.onload = function() {
             }
         }
         
-        if (idFila == ultimaFila) {
+        //Se borra la fila seleccionada.
+        if (idFila == ultimaFila && tableBody.rows.length > 0) {
             tableBody.deleteRow(evento.srcElement.parentElement.parentElement.getAttribute("data-fila"));
         }
 
