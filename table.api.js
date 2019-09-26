@@ -2,6 +2,7 @@ window.onload = function() {
     var tabla = document.getElementById("tabla");
     var botonesCrearFila = document.getElementsByClassName("btnAgregar");
     var botonesBorrarFila = document.getElementsByClassName("btnBorrar");
+    var cantidadCeldasInicial = tabla.tHead.rows[0].cells.length;
     
     /**
      * 1- Obtener el número de filas
@@ -13,8 +14,11 @@ window.onload = function() {
      */
     function crearFila(evento) {
         var tableBody = tabla.tBodies[0];
-        var celdas = tableBody.rows[tableBody.rows.length - 2].cells;
-        var totalCeldas = (typeof celdas == undefined) ? 0 : celdas.length;
+        var totalFilas = tableBody.rows.length;
+        var totalCeldas = cantidadCeldasInicial;
+        var filaActual = 0;
+
+        if (totalFilas > 0) { filaActual = totalFilas--; }
 
         //Se crea una nueva fila
         tableBody.appendChild(agregarFila());
@@ -25,13 +29,13 @@ window.onload = function() {
              * especial en la última celda de la última fila creada. 
              */
             if (c == (totalCeldas - 1)) {
-                tableBody.rows[tableBody.rows.length - 1]
+                tableBody.rows[filaActual]
                 .insertCell(c)
                 .appendChild(crearBoton());
             } else {
-                tableBody.rows[tableBody.rows.length - 1]
+                tableBody.rows[filaActual]
                 .insertCell(c)
-                .innerHTML = "Celda " + (tableBody.rows.length - 1) + " - " + c;
+                .innerHTML = "Celda " + (totalFilas - 1) + " - " + c;
             }
         }
 
@@ -41,8 +45,8 @@ window.onload = function() {
         * borrar una fila cuyo indice no exista dentro del listado de
         * filas de elemento tbody.
         */
-        for (var i = 0; i < tabla.tBodies[0].rows.length; i++) {
-            tabla.tBodies[0].rows[i].setAttribute("data-fila", i);
+        for (var i = 0; i < totalFilas.length; i++) {
+            tableBody.rows[i].setAttribute("data-fila", i);
         }
 
         botonesBorrarFila = document.getElementsByClassName("btnBorrar");
