@@ -58,20 +58,22 @@ window.onload = function() {
      * @param {MouseEvent} evento 
      */
     function borrarFila(evento) {
+        //Se declara el table body actual.
+        var tableBody = tabla.tBodies[0];
+
         //Se declara el ID de la primera fila. 
         var primeraFila = 0;
         
         //Se declara el ID de la última fila.
-        var ultimaFila = tabla.tBodies[0].rows.length - 1;
+        var ultimaFila = tableBody.rows.length - 1;
         
         //Se obtiene el ID de la fila que se esta borrando.
         var idFila = evento.srcElement.parentElement.parentElement.getAttribute("data-fila");
         
         //Se valida si se esta borrando la primera fila 
         if (idFila == primeraFila) {
-            console.log("Borrando la primera fila");
             //Se borra la fila
-            tabla.tBodies[0].deleteRow(evento.srcElement.parentElement.parentElement.getAttribute("data-fila"));
+            tableBody.deleteRow(evento.srcElement.parentElement.parentElement.getAttribute("data-fila"));
             
             /*
              * Se realiza un recorrido por las filas que quedaron y se 
@@ -79,22 +81,21 @@ window.onload = function() {
              * borrar una fila cuyo indice no exista dentro del listado de
              * filas de elemento tbody.
              */
-            for (var i = idFila; i < tabla.tBodies[0].rows.length; i++) {
-                tabla.tBodies[0].rows[i].setAttribute("data-fila", i);
+            for (var i = idFila; i < tableBody.rows.length; i++) {
+                tableBody.rows[i].setAttribute("data-fila", i);
             }
         }
         
         if (idFila > primeraFila && idFila < ultimaFila) {
-            tabla.tBodies[0].deleteRow(evento.srcElement.parentElement.parentElement.getAttribute("data-fila"));
+            tableBody.deleteRow(evento.srcElement.parentElement.parentElement.getAttribute("data-fila"));
             
             for (var i = idFila; i < ultimaFila; i++) {
-                tabla.tBodies[0].rows[i].setAttribute("data-fila", i);
+                tableBody.rows[i].setAttribute("data-fila", i);
             }
         }
         
         if (idFila == ultimaFila) {
-            console.log("Borrando la ultima fila");
-            tabla.tBodies[0].deleteRow(evento.srcElement.parentElement.parentElement.getAttribute("data-fila"));
+            tableBody.deleteRow(evento.srcElement.parentElement.parentElement.getAttribute("data-fila"));
         }
 
         botonesBorrarFila = document.getElementsByClassName("btnBorrar");
