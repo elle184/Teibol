@@ -35,7 +35,7 @@ window.onload = function() {
             } else {
                 tableBody.rows[filaActual]
                 .insertCell(c)
-                .innerHTML = "Celda " + (totalFilas - 1) + " - " + c;
+                .innerHTML = "Celda " + c + " - Fila " + filaActual;
             }
         }
 
@@ -45,14 +45,14 @@ window.onload = function() {
         * borrar una fila cuyo indice no exista dentro del listado de
         * filas de elemento tbody.
         */
-        for (var i = 0; i < totalFilas.length; i++) {
-            tableBody.rows[i].setAttribute("data-fila", i);
-        }
+        for (var i = 0; i < totalFilas; i++) { tableBody.rows[i].setAttribute("data-fila", i); }
 
-        botonesBorrarFila = document.getElementsByClassName("btnBorrar");
-
-        for (var f in botonesBorrarFila) {
-            botonesBorrarFila[f].onclick = borrarFila;
+        /*
+         * Se obtienen todos los botones que se encargan de borrar su respectiva fila y se les 
+         * agrega la función de borrado.
+         */
+        for (var f in document.getElementsByClassName("btnBorrar")) { 
+            botonesBorrarFila[f].onclick = borrarFila; 
         }
     };
     
