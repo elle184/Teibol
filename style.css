@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+} 
+
+button {
+    padding: 2px;
+    border-radius: 2px;
+}
+
+button.btnAgregar {
+    background-color: #55efc4;
+    border-color: #55efc4;
+    border: 1px solid #55efc4;
+}
+
+button.btnAgregar:hover {
+    background-color: #81ecec;
+    border-color: #81ecec;
+}
+
+button.btnBorrar {
+    background-color: #ff7675;
+    border-color: #ff7675;
+}
+
+button.btnBorrar:hover {
+    background-color: #fab1a0;
+    border-color: #fab1a0;
+}
+
+table, button.btnAgregar {
+    margin: 10px;
+}
+
+table, table * {
+    margin: 0 auto;
+    border: 1px solid #dfe6e9;
+    border-collapse: collapse;
+    padding: 2px;
+}
+
+table caption {
+    border-color: #FFF;
+}
+
+#menuAcciones * {
+    float: right;
+}
