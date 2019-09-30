@@ -3,11 +3,14 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: "Sans-serif";
 } 
 
 button {
     padding: 2px;
     border-radius: 2px;
+    width: 32px;
+    height: 32px;
 }
 
 button.btnAgregar {
