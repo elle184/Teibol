@@ -121,7 +121,7 @@ window.onload = function() {
         var boton = document.createElement("button");
         boton.setAttribute("type", "button");
         boton.setAttribute("class", "btnBorrar");
-        boton.innerHTML = "Borrar";
+        boton.innerHTML = "-";
 
         return boton;
     }
