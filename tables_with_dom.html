@@ -2,12 +2,15 @@
 <html>
     <head>
         <title>Manejo de tablas con DOM</title>
+
+        <link rel="stylesheet" href="style.css" media="all" />
     </head>
     <body>
-        <div>
-            <button type="button" class="btnAgregar">+</button>
-        </div>
         <table id="tabla">
+            <caption id="menuAcciones">
+                <button type="button" class="btnAgregar">+</button>
+            </caption>
+            <caption>Manejo de tablas con DOM y Javascript</caption>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -23,27 +26,24 @@
                     <td>Thomas</td>
                     <td>Beaudin</td>
                     <td>936-266-1332</td>
-                    <td><button type="button" class="btnBorrar">Borrar</button></td>
+                    <td><button type="button" class="btnBorrar">-</button></td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>Justin</td>
                     <td>Cody</td>
                     <td>318-233-8015</td>
-                    <td><button type="button" class="btnBorrar">Borrar</button></td>
+                    <td><button type="button" class="btnBorrar">-</button></td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td>Norma</td>
                     <td>Butler</td>
                     <td>915-750-3609</td>
-                    <td><button type="button" class="btnBorrar">Borrar</button></td>
+                    <td><button type="button" class="btnBorrar">-</button></td>
                 </tr>
             </tbody>
         </table>
-        <div>
-            <button type="button" class="btnAgregar">+</button>
-        </div>
     </body>
     <script type="text/javascript" src="table.api.js"></script>
 </html>
