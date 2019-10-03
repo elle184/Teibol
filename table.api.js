@@ -1,7 +1,8 @@
 window.onload = function() {
-    var tabla = document.getElementById("tabla");
-    var botonesCrearFila = document.getElementsByClassName("btnAgregar");
-    var botonesBorrarFila = document.getElementsByClassName("btnBorrar");
+    this.console.log(jsonObject);
+    var tabla = document.getElementById(jsonObject.tableId);
+    var botonesCrearFila = document.getElementsByClassName(jsonObject.addButton);
+    var botonesBorrarFila = document.getElementsByClassName(jsonObject.deleteButton);
     var cantidadCeldasInicial = tabla.tHead.rows[0].cells.length;
     
     /**

@@ -1,5 +1,13 @@
 {
     "tableId":"tabla",
     "addButton":"btnAgregar",
-    "deleteButton":"btnBorrar"
+    "deleteButton":"btnBorrar",
+    "totalCells":5,
+    "cellElement": [
+        {"element":"input", "type":"text", "class":null},
+        {"element":"input", "type":"text", "class":null},
+        {"element":"input", "type":"text", "class":null},
+        {"element":"input", "type":"text", "class":null},
+        {"element":"input", "type":"text", "class":null}
+    ]
 }
