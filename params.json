@@ -4,10 +4,9 @@
     "deleteButton":"btnBorrar",
     "totalCells":5,
     "cellElement": [
-        {"element":"input", "type":"text", "class":null},
-        {"element":"input", "type":"text", "class":null},
-        {"element":"input", "type":"text", "class":null},
-        {"element":"input", "type":"text", "class":null},
-        {"element":"input", "type":"text", "class":null}
+        {"element":"input", "type":"text", "class":null, "name":"id[]"},
+        {"element":"input", "type":"text", "class":null, "name":"name[]"},
+        {"element":"input", "type":"text", "class":null, "name":"lastname[]"},
+        {"element":"input", "type":"text", "class":null, "name":"phone_number[]"}
     ]
 }
