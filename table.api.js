@@ -134,11 +134,32 @@ window.onload = function() {
          */
         function crearElemento(elemento) {
             var element = document.createElement(elemento.element);
-            element.setAttribute("type", elemento.type);
-
-            if (elemento.class != null) { element.setAttribute("class", elemento.class); }
-
             element.setAttribute("name", elemento.name);
+
+            //Valida que el atributo type este definido.
+            if (elemento.type != undefined && elemento.type != null) {
+                element.setAttribute("type", elemento.type);
+            }
+
+            //Valida que el atributo class este definido.
+            if (elemento.class != undefined && elemento.class != null) { 
+                element.setAttribute("class", elemento.class); 
+            }
+
+            if (elemento.label != undefined && elemento.label != null) {
+                crearElemento(elemento.label.element);
+            }
+
+            if (elemento.options != null && elemento.options.length > 0) {
+                for (var o in elemento.options) {
+                    var option = document.createElement(elemento.options[o].element);
+                    var text = document.createTextNode(elemento.options[o].text);
+                    option.setAttribute("value", elemento.options[o].value);
+                    option.appendChild(text);
+
+                    element.appendChild(option);
+                }
+            }
 
             return element;
         }
@@ -169,6 +190,6 @@ window.onload = function() {
         }
     } catch (excepcion) {
         this.console.error(excepcion.message);
-        this.console.error("Los parámetros para la tabla no están definidos. Construye el objeto JSON con la estructura definida en https://elle184.github.io/TableJsApi/");
+        this.console.error("Los par\u00E1metros para la tabla no est\u00E1n definidos. Construye el objeto JSON con la estructura definida en https://elle184.github.io/TableJsApi/");
     }
 };

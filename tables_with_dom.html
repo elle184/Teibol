@@ -46,18 +46,34 @@
         </table>
     </body>
     <script type="text/javascript">
-        /*var jsonObject = {
-            "tableId":"tabla",
-            "addButton":"btnAgregar",
-            "deleteButton":"btnBorrar",
-            "totalCells":5,
-            "cellElement": [
-                {"element":"input", "type":"text", "class":null, "name":"id[]"},
-                {"element":"input", "type":"text", "class":null, "name":"name[]"},
-                {"element":"input", "type":"text", "class":null, "name":"lastname[]"},
-                {"element":"input", "type":"text", "class":null, "name":"phone_number[]"}
+        var jsonObject = {
+    "tableId":"tabla",
+    "addButton":"btnAgregar",
+    "deleteButton":"btnBorrar",
+    "totalCells":5,
+    "cellElement": [
+        {"element":"input", "type":"text", "class":null, "name":"name[]"},
+        {"element":"input", "type":"text", "class":null, "name":"lastname[]"},
+        {
+            "element":"select",
+            "name":"country[]",
+            "options": [
+                {"element": "option", "value":"1", "text":"Option 1"},
+                {"element": "option", "value":"2", "text":"Option 2"},
+                {"element": "option", "value":"3", "text":"Option 3"},
+                {"element": "option", "value":"4", "text":"Option 4"},
+                {"element": "option", "value":"5", "text":"Option 5"},
+                {"element": "option", "value":"6", "text":"Option 6"}
             ]
-        }*/
+        },
+        {
+            "element":"input",
+            "type":"radio",
+            "name":"radio_options[]",
+            "label":{"element":"label", "text":"Radio 1"}
+        }
+    ]
+}
     </script>
     <script type="text/javascript" src="table.api.js"></script>
 </html>
