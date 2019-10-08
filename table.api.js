@@ -133,8 +133,13 @@ window.onload = function() {
          * @returns {HTMLElementTagNameMap}:    Retorna el objeto DOM del tipo de elemento requerido.
          */
         function crearElemento(elemento) {
+            var elementLabel = null;
             var element = document.createElement(elemento.element);
-            element.setAttribute("name", elemento.name);
+            
+            //Se verifica si el elemento name esta definido.
+            if (elemento.name !=  undefined && elemento.name != null) {
+                element.setAttribute("name", elemento.name);
+            }
 
             //Valida que el atributo type este definido.
             if (elemento.type != undefined && elemento.type != null) {
@@ -146,8 +151,15 @@ window.onload = function() {
                 element.setAttribute("class", elemento.class); 
             }
 
+            //Se verifica si el elemento label esta definido para adjuntarlo al elemento radio o checkbox.
             if (elemento.label != undefined && elemento.label != null) {
-                crearElemento(elemento.label.element);
+                elementLabel = crearElemento(elemento.label);
+            }
+
+            //Se verifica si el elemento text esta definido.
+            if (elemento.text != undefined && elemento.text != null) {
+                var textNode = document.createTextNode(elemento.text);
+                element.appendChild(textNode);
             }
 
             if (elemento.options != null && elemento.options.length > 0) {
@@ -159,6 +171,14 @@ window.onload = function() {
 
                     element.appendChild(option);
                 }
+            }
+
+            if (element.type == "radio" || element.type == "checkbox") {
+                var spanElement = document.createElement("span");
+                spanElement.appendChild(element);
+                spanElement.appendChild(elementLabel);
+
+                element = spanElement;
             }
 
             return element;
