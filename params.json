@@ -22,7 +22,11 @@
             "element":"input",
             "type":"radio",
             "name":"radio_options[]",
-            "label":{"element":"label", "text":"Radio 1"}
+            "radioElements":[
+                {"element":"label", "text":"Radio 1", "value": 1},
+                {"element":"label", "text":"Radio 2", "value": 2},
+                {"element":"label", "text":"Radio 3", "value": 3}
+            ]
         }
     ]
 }

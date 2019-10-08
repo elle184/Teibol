@@ -151,11 +151,6 @@ window.onload = function() {
                 element.setAttribute("class", elemento.class); 
             }
 
-            //Se verifica si el elemento label esta definido para adjuntarlo al elemento radio o checkbox.
-            if (elemento.label != undefined && elemento.label != null) {
-                elementLabel = crearElemento(elemento.label);
-            }
-
             //Se verifica si el elemento text esta definido.
             if (elemento.text != undefined && elemento.text != null) {
                 var textNode = document.createTextNode(elemento.text);
@@ -174,11 +169,19 @@ window.onload = function() {
             }
 
             if (element.type == "radio" || element.type == "checkbox") {
-                var spanElement = document.createElement("span");
-                spanElement.appendChild(element);
-                spanElement.appendChild(elementLabel);
+                var element = document.createElement("span");
 
-                element = spanElement;
+                if (elemento.radioElements != undefined || elemento.radioElements != null) {
+                    for (var r in elemento.radioElements) {
+                        var radioCheckboxElement = document.createElement(elemento.element);
+                        radioCheckboxElement.setAttribute("type", elemento.type);
+                        radioCheckboxElement.setAttribute("name", elemento.name);
+                        radioCheckboxElement.setAttribute("value", elemento.radioElements[r].value);
+                        radioCheckboxElement.appendChild(crearElemento(elemento.radioElements[r]));
+
+                        element.appendChild(radioCheckboxElement);
+                    }
+                }
             }
 
             return element;

@@ -7,7 +7,7 @@ El API se encarga de:
 2. Remover filas de cualquier posición en la tabla.
 3. Mediante un objeto JSON puedes crear los configuraciones iniciales de la tabla y crear los elementos de cada celda.
 
-# h1 Objeto JSON
+## Objeto JSON
 
 ```javascript
 {
