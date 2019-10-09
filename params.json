@@ -2,7 +2,7 @@
     "tableId":"tabla",
     "addButton":"btnAgregar",
     "deleteButton":"btnBorrar",
-    "totalCells":5,
+    "totalCells":6,
     "cellElement": [
         {"element":"input", "type":"text", "class":null, "name":"name[]"},
         {"element":"input", "type":"text", "class":null, "name":"lastname[]"},
@@ -26,6 +26,16 @@
                 {"element":"label", "text":"Radio 1", "value": 1},
                 {"element":"label", "text":"Radio 2", "value": 2},
                 {"element":"label", "text":"Radio 3", "value": 3}
+            ]
+        },
+        {
+            "element":"input",
+            "type":"checkbox",
+            "name":"checkbox_options[]",
+            "radioElements":[
+                {"element":"label", "text":"Checkbox 1", "value": 1},
+                {"element":"label", "text":"Checkbox 2", "value": 2},
+                {"element":"label", "text":"Checkbox 3", "value": 3}
             ]
         }
     ]

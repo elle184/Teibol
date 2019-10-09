@@ -169,7 +169,7 @@ window.onload = function() {
             }
 
             if (element.type == "radio" || element.type == "checkbox") {
-                var element = document.createElement("span");
+                element = document.createElement("span");
 
                 if (elemento.radioElements != undefined || elemento.radioElements != null) {
                     for (var r in elemento.radioElements) {
@@ -177,9 +177,9 @@ window.onload = function() {
                         radioCheckboxElement.setAttribute("type", elemento.type);
                         radioCheckboxElement.setAttribute("name", elemento.name);
                         radioCheckboxElement.setAttribute("value", elemento.radioElements[r].value);
-                        radioCheckboxElement.appendChild(crearElemento(elemento.radioElements[r]));
 
                         element.appendChild(radioCheckboxElement);
+                        element.appendChild(crearElemento(elemento.radioElements[r]));
                     }
                 }
             }
