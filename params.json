@@ -1,33 +1,4 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Manejo de tablas con DOM</title>
-
-        <link rel="stylesheet" href="style.css" media="all" />
-    </head>
-    <body>
-        <table id="tabla">
-            <caption id="menuAcciones">
-                <button type="button" class="btnAgregar">+</button>
-            </caption>
-            <caption>Manejo de tablas con DOM y Javascript</caption>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Tel&eacute;fono</th>
-                    <th>Radio Elements</th>
-                    <th>Checkbox Elements</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </body>
-    <script type="text/javascript">
-        var jsonObject = {
+{
     "tableId":"tabla",
     "addButton":"btnAgregar",
     "deleteButton":"btnBorrar",
@@ -69,6 +40,3 @@
         }
     ]
 }
-    </script>
-    <script type="text/javascript" src="table.api.js"></script>
-</html>
