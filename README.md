@@ -7,7 +7,37 @@ El API se encarga de:
 2. Remover filas de cualquier posición en la tabla.
 3. Mediante un objeto JSON puedes crear los configuraciones iniciales de la tabla y crear los elementos de cada celda.
 
-## Objeto JSON
+## Configuración
+
+### Tabla HTML
+
+La tabla la puedes configurar a tu gusto. Lo único que necesita el API que sea obligatorio es la existencia del elemento **tbody** dentro de la tabla.
+
+```html
+<table id="tabla">
+    <caption id="menuAcciones">
+        <button type="button" class="btnAgregar">+</button>
+    </caption>
+    <caption>Manejo de tablas con DOM y Javascript</caption>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Tel&eacute;fono</th>
+            <th>Radio Elements</th>
+            <th>Checkbox Elements</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+```
+
+### Objeto JSON
+
+Este es un ejemplo completo de como se puede configurar una tabla HTML para que pueda ser manipulada por el API.
 
 ```javascript
 {
@@ -53,6 +83,8 @@ El API se encarga de:
     ]
 }
 ```
+
+#### Elementos del objeto JSON
 
 * **tableId:** El valor del atributo **id** del elemento **table**.
 * **addButton:** El valor del atributo **class** del elemento **button** para crear nuevas filas en la tabla.
