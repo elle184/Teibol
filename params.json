@@ -1,7 +1,7 @@
 {
     "tableId":"tabla",
     "addButton":"btnAgregar",
-    "deleteButton":"btnBorrar",
+    "deleteButton":{"element":"button", "type":"button", "class":"BtnBorrar", "name":"btnBorrar", "text":"-"},
     "totalCells":6,
     "cellElement": [
         {"element":"input", "type":"text", "class":null, "name":"name[]"},
