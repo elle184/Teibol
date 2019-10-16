@@ -182,7 +182,7 @@ window.onload = function() {
         function agregarFila(numFila) {
             var fila = document.createElement("tr");
             fila.setAttribute("data-fila", numFila);
-            return document.createElement("tr");
+            return fila;
         }
 
         /*
