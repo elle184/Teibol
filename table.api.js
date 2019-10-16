@@ -2,7 +2,6 @@ window.onload = function() {
     try {
         var tabla = document.getElementById(jsonObject.tableId);
         var botonesCrearFila = document.getElementsByClassName(jsonObject.addButton);
-        var botonesBorrarFila = document.getElementsByClassName(jsonObject.deleteButton);
         var cantidadCeldasInicial = jsonObject.totalCells;
         
         /**
@@ -22,7 +21,7 @@ window.onload = function() {
             if (totalFilas > 0) { filaActual = totalFilas--; }
 
             //Se crea una nueva fila
-            tableBody.appendChild(agregarFila());
+            tableBody.appendChild(agregarFila(totalFilas));
 
             for (var c = 0; c < totalCeldas; c++) {
                 /*
@@ -30,9 +29,12 @@ window.onload = function() {
                 * especial en la última celda de la última fila creada. 
                 */
                 if (c == (totalCeldas - 1)) {
+                    var botonBorrar = crearElemento(jsonObject.deleteButton);
+                    botonBorrar.onclick = borrarFila;
+
                     tableBody.rows[filaActual]
                     .insertCell(c)
-                    .appendChild(crearBoton());
+                    .appendChild(botonBorrar);
                 } else {
                     tableBody.rows[filaActual]
                     .insertCell(c)
@@ -46,13 +48,15 @@ window.onload = function() {
             * borrar una fila cuyo indice no exista dentro del listado de
             * filas de elemento tbody.
             */
-            for (var i = 0; i < totalFilas; i++) { tableBody.rows[i].setAttribute("data-fila", i); }
+            //for (var i = 0; i < totalFilas; i++) { tableBody.rows[i].setAttribute("data-fila", i); }
 
             /*
             * Se obtienen todos los botones que se encargan de borrar su respectiva fila y se les 
             * agrega la función de borrado.
             */
-            for (var f in document.getElementsByClassName("btnBorrar")) { 
+            var botonesBorrarFila = document.getElementsByClassName(jsonObject.deleteButton.class);
+
+            for (var f in botonesBorrarFila) {
                 botonesBorrarFila[f].onclick = borrarFila; 
             }
         };
@@ -104,28 +108,12 @@ window.onload = function() {
                 tableBody.deleteRow(evento.srcElement.parentElement.parentElement.getAttribute("data-fila"));
             }
 
-            botonesBorrarFila = document.getElementsByClassName("btnBorrar");
+            var botonesBorrarFila = document.getElementsByClassName(jsonObject.deleteButton.class);
 
             for (var f in botonesBorrarFila) {
                 botonesBorrarFila[f].onclick = borrarFila;
             }
         };
-        
-        /**
-         * Método encargado de la creación de un nuevo botón 
-         * 
-         * <button type="button" class="btnBorrar">Borrar</button>
-         * 
-         * @returns {HTMLElementTagNameMap}:    Retorna el objeto DOM de tipo button.
-         */
-        function crearBoton() {
-            var boton = document.createElement("button");
-            boton.setAttribute("type", "button");
-            boton.setAttribute("class", "btnBorrar");
-            boton.innerHTML = "-";
-
-            return boton;
-        }
 
         /**
          * Método encargado de crear un elemento HTML especifico para cada celda.
@@ -133,7 +121,6 @@ window.onload = function() {
          * @returns {HTMLElementTagNameMap}:    Retorna el objeto DOM del tipo de elemento requerido.
          */
         function crearElemento(elemento) {
-            var elementLabel = null;
             var element = document.createElement(elemento.element);
             
             //Se verifica si el elemento name esta definido.
@@ -192,8 +179,10 @@ window.onload = function() {
          * 
          * @returns {HTMLElementTagNameMap}:    Retorna el objeto DOM de tipo tr
          */
-        function agregarFila() {
-            return document.createElement("tr");
+        function agregarFila(numFila) {
+            var fila = document.createElement("tr");
+            fila.setAttribute("data-fila", numFila);
+            return fila;
         }
 
         /*
@@ -206,10 +195,6 @@ window.onload = function() {
         
         for (var f in botonesCrearFila) {
             botonesCrearFila[f].onclick = crearFila;
-        }
-        
-        for (var f in botonesBorrarFila) {
-            botonesBorrarFila[f].onclick = borrarFila;
         }
     } catch (excepcion) {
         this.console.error(excepcion.message);

@@ -24,12 +24,12 @@ button.btnAgregar:hover {
     border-color: #81ecec;
 }
 
-button.btnBorrar {
+button.BtnBorrar {
     background-color: #ff7675;
     border-color: #ff7675;
 }
 
-button.btnBorrar:hover {
+button.BtnBorrar:hover {
     background-color: #fab1a0;
     border-color: #fab1a0;
 }
