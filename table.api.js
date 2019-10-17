@@ -16,12 +16,10 @@ window.onload = function() {
             var tableBody = tabla.tBodies[0];
             var totalFilas = tableBody.rows.length;
             var totalCeldas = cantidadCeldasInicial;
-            var filaActual = 0;
-
-            if (totalFilas > 0) { filaActual = totalFilas--; }
+            var filaActual = totalFilas;
 
             //Se crea una nueva fila
-            tableBody.appendChild(agregarFila(totalFilas));
+            tableBody.appendChild(agregarFila(filaActual));
 
             for (var c = 0; c < totalCeldas; c++) {
                 /*
@@ -43,17 +41,9 @@ window.onload = function() {
             }
 
             /*
-            * Se realiza un recorrido por las filas que quedaron y se 
-            * les reasigna un nuevo ID de fila. Esto se hace para evitar
-            * borrar una fila cuyo indice no exista dentro del listado de
-            * filas de elemento tbody.
-            */
-            //for (var i = 0; i < totalFilas; i++) { tableBody.rows[i].setAttribute("data-fila", i); }
-
-            /*
-            * Se obtienen todos los botones que se encargan de borrar su respectiva fila y se les 
-            * agrega la función de borrado.
-            */
+             * Se obtienen todos los botones que se encargan de borrar su respectiva fila y se les 
+             * agrega la función de borrado.
+             */
             var botonesBorrarFila = document.getElementsByClassName(jsonObject.deleteButton.class);
 
             for (var f in botonesBorrarFila) {
