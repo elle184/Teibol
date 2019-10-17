@@ -43,7 +43,7 @@ Este es un ejemplo completo de como se puede configurar una tabla HTML para que 
 {
     "tableId":"tabla",
     "addButton":"btnAgregar",
-    "deleteButton":"btnBorrar",
+    "deleteButton":{"element":"button", "type":"button", "class":"BtnBorrar", "name":"btnBorrar", "text":"-"},
     "totalCells":6,
     "cellElement": [
         {"element":"input", "type":"text", "class":null, "name":"name[]"},
@@ -88,7 +88,13 @@ Este es un ejemplo completo de como se puede configurar una tabla HTML para que 
 
 * **tableId:** El valor del atributo **id** del elemento **table**.
 * **addButton:** El valor del atributo **class** del elemento **button** para crear nuevas filas en la tabla.
-* **deleteButton:** El valor el atributo **class** del elemento **button** para borrar una fila de una tabla.
+* **deleteButton:** Es un objeto JSON con la definición del botón a crear
+
+```javascript 
+{"element":"button", "type":"button", "class":"BtnBorrar", "name":"btnBorrar", "text":"-"}
+```
+
+**button** para borrar una fila de una tabla.
 * **totalCells:** La cantidad de celdas que tendrá la tabla.
 * **cellElements:** Es un arreglo con los elementos a colocar en cada celda en el cual se declara objetos del tipo:
 
