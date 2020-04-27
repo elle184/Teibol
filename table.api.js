@@ -134,6 +134,7 @@ window.onload = function() {
                 element.appendChild(textNode);
             }
 
+            //Crea nuevos elementos de tipo options para una lista de tipo select.
             if (elemento.options != null && elemento.options.length > 0) {
                 for (var o in elemento.options) {
                     var option = document.createElement(elemento.options[o].element);
@@ -145,6 +146,7 @@ window.onload = function() {
                 }
             }
 
+            //Creación de elementos tipo radio y elementos tipo checkbox
             if (element.type == "radio" || element.type == "checkbox") {
                 element = document.createElement("span");
 
@@ -161,6 +163,14 @@ window.onload = function() {
                 }
             }
 
+            //Creación de un nuevo datalist.
+            if (elemento.list != undefined && elemento.list != null) {
+                element = document.createElement("input");
+                element.setAttribute("list", elemento.list);
+
+                element.onblur = addDataToDataList;
+            }
+
             return element;
         }
 
@@ -175,10 +185,51 @@ window.onload = function() {
             return fila;
         }
 
+        /**
+         * Agrega un nuevo elemento a un datalist. En caso de que el elemento datalist no exista, se crea y se
+         * agrega al body del documento.
+         * 
+         * @param {FocusEvent} object   El objeto con la información del evento lanzado.
+         */
+        function addDataToDataList(object) {
+            if (validateObject(object.srcElement.getAttribute("list")) && validateObject(object.srcElement.list)) {
+                createOptionValueToDataList(object.srcElement.list, object.srcElement.value);
+            } else {
+                var datalist = document.createElement("datalist");
+                datalist.setAttribute("id", object.srcElement.getAttribute("list"));
+
+                createOptionValueToDataList(datalist, object.srcElement.value);
+
+                document.body.appendChild(datalist);
+            }
+        }
+
+        /**
+         * Crea una nueva opción para el datalist.
+         * 
+         * @param {HTMLDataListElement} datalist    El objeto de tipo datalist.
+         * @param {Text} value                      El valor para el option nuevo a asociar al datalist.
+         */
+        function createOptionValueToDataList(datalist, value) {
+            var option = document.createElement("option");
+            option.setAttribute("name", value);
+            option.setAttribute("value", value);
+            datalist.appendChild(option);
+        }
+
+        /**
+         * Valida si esta definido un objeto.
+         * 
+         * @param {HTMLElement} element 
+         */
+        function validateObject(element) {
+            return element != undefined && element != null;
+        }
+
         /*
-        * A cada fila se le agrega un atributo de tipo dataset para identificar 
-        * el número de fila en próximas validaciones. 
-        */
+         * A cada fila se le agrega un atributo de tipo dataset para identificar 
+         * el número de fila en próximas validaciones. 
+         */
         for (var f = 0; f < tabla.tBodies[0].rows.length; f++) {
             tabla.tBodies[0].rows[f].setAttribute("data-fila", f);
         }
