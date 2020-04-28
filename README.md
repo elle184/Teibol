@@ -94,7 +94,7 @@ Este es un ejemplo completo de como se puede configurar una tabla HTML para que 
 {"element":"button", "type":"button", "class":"BtnBorrar", "name":"btnBorrar", "text":"-"}
 ```
 
-**button** para borrar una fila de una tabla.
+* **button** para borrar una fila de una tabla.
 * **totalCells:** La cantidad de celdas que tendrá la tabla.
 * **cellElements:** Es un arreglo con los elementos a colocar en cada celda en el cual se declara objetos del tipo:
 
