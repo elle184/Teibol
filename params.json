@@ -2,7 +2,7 @@
     "tableId":"tabla",
     "addButton":"btnAgregar",
     "deleteButton":{"element":"button", "type":"button", "class":"BtnBorrar", "name":"btnBorrar", "text":"-"},
-    "totalCells":6,
+    "totalCells":7,
     "cellElement": [
         {"element":"input", "type":"text", "class":null, "name":"name[]"},
         {"element":"input", "type":"text", "class":null, "name":"lastname[]"},
@@ -37,6 +37,7 @@
                 {"element":"label", "text":"Checkbox 2", "value": 2},
                 {"element":"label", "text":"Checkbox 3", "value": 3}
             ]
-        }
+        },
+        {"element": "input", "list": "categories", "name":"categories[]", "enabledKeyPress":true}
     ]
 }
