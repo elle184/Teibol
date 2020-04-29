@@ -79,7 +79,8 @@ Este es un ejemplo completo de como se puede configurar una tabla HTML para que 
                 {"element":"label", "text":"Checkbox 2", "value": 2},
                 {"element":"label", "text":"Checkbox 3", "value": 3}
             ]
-        }
+        },
+        {"element": "input", "list": "categories", "name":"categories[]"}
     ]
 }
 ```
