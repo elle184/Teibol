@@ -38,6 +38,6 @@
                 {"element":"label", "text":"Checkbox 3", "value": 3}
             ]
         },
-        {"element": "input", "list": "categories", "name":"categories[]", "enabledKeyPress":true}
+        {"element": "input", "list": "categories", "name":"categories[]"}
     ]
 }
