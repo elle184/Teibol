@@ -38,6 +38,18 @@
                 {"element":"label", "text":"Checkbox 3", "value": 3}
             ]
         },
-        {"element": "input", "list": "categories", "name":"categories[]"}
+        {
+            "element": "input", 
+            "list": "categories", 
+            "name":"categories[]",
+            "options": [
+                {"element": "option", "value":"Colombia", "text":"Colombia"},
+                {"element": "option", "value":"Brasil", "text":"Brasil"},
+                {"element": "option", "value":"Venezuela", "text":"Venezuela"},
+                {"element": "option", "value":"Perú", "text":"Perú"},
+                {"element": "option", "value":"Chile", "text":"Chile"},
+                {"element": "option", "value":"Argentina", "text":"Argentina"}
+            ]
+        }
     ]
 }
