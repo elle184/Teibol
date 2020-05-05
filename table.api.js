@@ -168,6 +168,10 @@ window.onload = function() {
                 element = document.createElement("input");
                 element.setAttribute("list", elemento.list);
 
+                if (!validateObject(document.getElementById(elemento.list))) {
+                    preloadDataToDataList(elemento.options, null, elemento.list);
+                }
+
                 element.onblur = addDataToDataList;
             }
 
@@ -193,12 +197,43 @@ window.onload = function() {
          */
         function addDataToDataList(object) {
             if (validateObject(object.srcElement.getAttribute("list")) && validateObject(object.srcElement.list)) {
-                createOptionValueToDataList(object.srcElement.list, object.srcElement.value);
+                createOptionValueToDataList(
+                    object.srcElement.list, 
+                    object.srcElement.value, 
+                    object.srcElement.value);
             } else {
                 var datalist = document.createElement("datalist");
                 datalist.setAttribute("id", object.srcElement.getAttribute("list"));
 
-                createOptionValueToDataList(datalist, object.srcElement.value);
+                createOptionValueToDataList(
+                    datalist, 
+                    object.srcElement.value,
+                    object.srcElement.value);
+
+                document.body.appendChild(datalist);
+            }
+        }
+
+        /**
+         * Precarga en un datalist, la información de los options value a visualizar.
+         * 
+         * @param {HTMLAllCollection}   element         El listado de elementos de tipo option a precargar.
+         * @param {HTMLDataListElement} list            El elemento de tipo list.
+         * @param {Text}                dataListName    El nombre para el nuevo datalist.
+         */
+        function preloadDataToDataList(element, list, dataListName) {
+            if (validateList(element) && validateObject(list)) {
+                for (var o in element) {
+                    createOptionValueToDataList(list, element[o].value, element[o].innerHTML);
+                }
+                
+            } else if (validateList(element)) {
+                var datalist = document.createElement("datalist");
+                datalist.setAttribute("id", dataListName);
+
+                for (var o in element) {
+                    createOptionValueToDataList(datalist, element[o].value, element[o].text);
+                }
 
                 document.body.appendChild(datalist);
             }
@@ -207,14 +242,35 @@ window.onload = function() {
         /**
          * Crea una nueva opción para el datalist.
          * 
-         * @param {HTMLDataListElement} datalist    El objeto de tipo datalist.
-         * @param {Text} value                      El valor para el option nuevo a asociar al datalist.
+         * @param {HTMLDataListElement} datalist        El objeto de tipo datalist.
+         * @param {Text} value                          El valor para el option nuevo a asociar al datalist.
+         * @param {Text} label                          El valor de tipo texto a colocar como enunciado para el valor 
+         *                                              del elemento option.
          */
-        function createOptionValueToDataList(datalist, value) {
-            var option = document.createElement("option");
-            option.setAttribute("name", value);
-            option.setAttribute("value", value);
-            datalist.appendChild(option);
+        function createOptionValueToDataList(datalist, value, label) {
+            if (isNotEmpty(value) && isNotEmpty(label) && !optionExistsIntoDataList(datalist, label)) {
+                var option = document.createElement("option");
+                option.appendChild(document.createTextNode(label));
+                option.setAttribute("value", value);
+                datalist.appendChild(option);
+            }
+        }
+
+        /**
+         * Valida si un nuevo valor que se esta ingresando para el datalist ya existe dentro del listado de opciones.
+         * 
+         * @param {HTMLDatalistElement} datalist        El datalist con todas las opciones.
+         * @param {Text} label                          El nombre del nuevo valor que se ha ingresado.
+         * @return {Boolean}                            Retorna TRUE si el valor ya existe dentro del listado.
+         */
+        function optionExistsIntoDataList(datalist, label) {
+            if (validateObject(datalist) && validateList(datalist.childNodes)) {
+                for (o in datalist.childNodes) {
+                    if (label == datalist.childNodes[o].text) {
+                        return true;
+                    }
+                }
+            }
         }
 
         /**
@@ -224,6 +280,19 @@ window.onload = function() {
          */
         function validateObject(element) {
             return element != undefined && element != null;
+        }
+
+        /**
+         * Valida si un listado de options esta definido y tiene datos.
+         * 
+         * @param {HTMLOptionElement} element       El listado de elementos de tipo option a ser validado. 
+         */
+        function validateList(element) {
+            return validateObject(element) && element.length > 0;
+        }
+
+        function isNotEmpty(data) {
+            return (data != null && data != "");
         }
 
         /*
