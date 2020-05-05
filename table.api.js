@@ -168,7 +168,9 @@ window.onload = function() {
                 element = document.createElement("input");
                 element.setAttribute("list", elemento.list);
 
-                preloadDataToDataList(elemento.options, null, elemento.list);
+                if (!validateObject(document.getElementById(elemento.list))) {
+                    preloadDataToDataList(elemento.options, null, elemento.list);
+                }
 
                 element.onblur = addDataToDataList;
             }
@@ -246,10 +248,29 @@ window.onload = function() {
          *                                              del elemento option.
          */
         function createOptionValueToDataList(datalist, value, label) {
-            var option = document.createElement("option");
-            option.appendChild(document.createTextNode(label));
-            option.setAttribute("value", value);
-            datalist.appendChild(option);
+            if (isNotEmpty(value) && isNotEmpty(label) && !optionExistsIntoDataList(datalist, label)) {
+                var option = document.createElement("option");
+                option.appendChild(document.createTextNode(label));
+                option.setAttribute("value", value);
+                datalist.appendChild(option);
+            }
+        }
+
+        /**
+         * Valida si un nuevo valor que se esta ingresando para el datalist ya existe dentro del listado de opciones.
+         * 
+         * @param {HTMLDatalistElement} datalist        El datalist con todas las opciones.
+         * @param {Text} label                          El nombre del nuevo valor que se ha ingresado.
+         * @return {Boolean}                            Retorna TRUE si el valor ya existe dentro del listado.
+         */
+        function optionExistsIntoDataList(datalist, label) {
+            if (validateObject(datalist) && validateList(datalist.childNodes)) {
+                for (o in datalist.childNodes) {
+                    if (label == datalist.childNodes[o].text) {
+                        return true;
+                    }
+                }
+            }
         }
 
         /**
@@ -268,6 +289,10 @@ window.onload = function() {
          */
         function validateList(element) {
             return validateObject(element) && element.length > 0;
+        }
+
+        function isNotEmpty(data) {
+            return (data != null && data != "");
         }
 
         /*
