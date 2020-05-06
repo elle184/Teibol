@@ -27,6 +27,7 @@ La tabla la puedes configurar a tu gusto. Lo único que necesita el API que sea 
             <th>Tel&eacute;fono</th>
             <th>Radio Elements</th>
             <th>Checkbox Elements</th>
+            <th>Datalist</th>
             <th></th>
         </tr>
     </thead>
@@ -79,6 +80,19 @@ Este es un ejemplo completo de como se puede configurar una tabla HTML para que 
                 {"element":"label", "text":"Checkbox 2", "value": 2},
                 {"element":"label", "text":"Checkbox 3", "value": 3}
             ]
+        },
+        {
+            "element": "input", 
+            "list": "categories", 
+            "name":"categories[]",
+            "options": [
+                {"element": "option", "value":"Colombia", "text":"Colombia"},
+                {"element": "option", "value":"Brasil", "text":"Brasil"},
+                {"element": "option", "value":"Venezuela", "text":"Venezuela"},
+                {"element": "option", "value":"Perú", "text":"Perú"},
+                {"element": "option", "value":"Chile", "text":"Chile"},
+                {"element": "option", "value":"Argentina", "text":"Argentina"}
+            ]
         }
     ]
 }
@@ -106,6 +120,7 @@ Este es un ejemplo completo de como se puede configurar una tabla HTML para que 
 * **cellElements.type:** El valor para el atributo **type** (Aplica para los elementos de tipo **input**).
 * **cellElements.class:** El valor del atributo **class** para el elemento.
 * **cellElements.name:** El valor del atributo **name** (Aplica para los elementos de tipo **input**). Es recomendable que el valor para este atributo sea un arreglo debido a que se van a crear elementos iguales y esto garantiza que toda la información que se llegase a guardar se envié completamente en dicho arreglo.
+* **cellElements.list:** El valor de este atributo contiene el nombre del atributo _id_ para el elemento _datalist_.
 * **cellElements.value:** El valor para el atributo **value**.
 * **cellElements.text:** El texto a colocar como hijo dentro de un elemento a crear.
 * **cellElements.options:** Es una arreglo de opciones usado para configurar las listas desplegables de los elementos de tipo **select**.
