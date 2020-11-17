@@ -1,11 +1,11 @@
 {
     "tableId":"tabla",
     "addButton":"btnAgregar",
-    "deleteButton":{"element":"button", "type":"button", "class":"BtnBorrar", "name":"btnBorrar", "text":"-"},
+    "deleteButton":{"element":"button", "type":"button", "classAttribute":"BtnBorrar", "name":"btnBorrar", "text":"-"},
     "totalCells":6,
     "cellElement": [
-        {"element":"input", "type":"text", "class":null, "name":"name[]"},
-        {"element":"input", "type":"text", "class":null, "name":"lastname[]"},
+        {"element":"input", "type":"text", "classAttribute":null, "name":"name[]"},
+        {"element":"input", "type":"text", "classAttribute":null, "name":"lastname[]"},
         {
             "element":"select",
             "name":"country[]",

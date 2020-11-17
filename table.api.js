@@ -44,7 +44,7 @@ window.onload = function() {
              * Se obtienen todos los botones que se encargan de borrar su respectiva fila y se les 
              * agrega la función de borrado.
              */
-            var botonesBorrarFila = document.getElementsByClassName(jsonObject.deleteButton.class);
+            var botonesBorrarFila = document.getElementsByClassName(jsonObject.deleteButton.classAttribute);
 
             for (var f in botonesBorrarFila) {
                 botonesBorrarFila[f].onclick = borrarFila; 
@@ -124,8 +124,8 @@ window.onload = function() {
             }
 
             //Valida que el atributo class este definido.
-            if (elemento.class != undefined && elemento.class != null) { 
-                element.setAttribute("class", elemento.class); 
+            if (elemento.classAttribute != undefined && elemento.classAttribute != null) { 
+                element.setAttribute("class", elemento.classAttribute); 
             }
 
             //Se verifica si el elemento text esta definido.
