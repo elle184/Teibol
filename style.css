@@ -49,6 +49,6 @@ table caption {
     border-color: #FFF;
 }
 
-#menuAcciones * {
+.ActionsMenu * {
     float: right;
 }

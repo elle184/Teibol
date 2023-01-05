@@ -1,11 +1,12 @@
-# TableJSAPI
-API Javascript para el manejo de tablas.
+# Teibol
+Librería para la creación de filas de una tabla HTML.
 
-El API se encarga de:
+La librería se encarga de:
 
 1. Crear nuevas filas.
 2. Remover filas de cualquier posición en la tabla.
 3. Mediante un objeto JSON puedes crear los configuraciones iniciales de la tabla y crear los elementos de cada celda.
+4. Puedes crear filas de mas de una tabla ubicada en una sola página HTML creando un arreglo de objetos JSON.
 
 ## Configuración
 
@@ -40,8 +41,8 @@ La tabla la puedes configurar a tu gusto. Lo único que necesita el API que sea 
 
 Este es un ejemplo completo de como se puede configurar una tabla HTML para que pueda ser manipulada por el API.
 
-```javascript
-{
+``` javascript
+var jsonObject = [{
     "tableId":"tabla",
     "addButton":"btnAgregar",
     "deleteButton":{"element":"button", "type":"button", "class":"BtnBorrar", "name":"btnBorrar", "text":"-"},
@@ -95,7 +96,7 @@ Este es un ejemplo completo de como se puede configurar una tabla HTML para que 
             ]
         }
     ]
-}
+}]
 ```
 
 #### Elementos del objeto JSON
@@ -126,8 +127,115 @@ Este es un ejemplo completo de como se puede configurar una tabla HTML para que 
 * **cellElements.options:** Es una arreglo de opciones usado para configurar las listas desplegables de los elementos de tipo **select**.
 * **cellElements.radioElements:** Es un arreglo de elementos a asociar a los elementos de tipo **radio** o **checkbox** que se esten creando.
 
-<style>.bmc-button img{width: 27px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{line-height: 36px !important;height:37px !important;text-decoration: none !important;display:inline-flex !important;color:#FFFFFF !important;background-color:#FF813F !important;border-radius: 3px !important;border: 1px solid transparent !important;padding: 1px 9px !important;font-size: 22px !important;letter-spacing:0.6px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Cookie', cursive !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#FFFFFF !important;}</style>
-<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+### Cómo configurar mas de una tabla
+
+1. Crea tus tablas como aparece en el apartado **Tabla HTML**.
+2. Crea un arreglo de objetos JSON.
+
+Ejemplo:
+
+``` javascript
+var jsonObject = [{
+            "tableId":"tabla",
+            "addButton":"btnAgregar",
+            "deleteButton":{"element":"button", "type":"button", "class":"BtnBorrar", "name":"btnBorrar", "text":"-"},
+            "totalCells":7,
+            "cellElement": [
+                {"element":"input", "type":"text", "class":null, "name":"name[]"},
+                {"element":"input", "type":"text", "class":null, "name":"lastname[]"},
+                {
+                    "element":"select",
+                    "name":"country[]",
+                    "options": [
+                        {"element": "option", "value":"1", "text":"Option 1"},
+                        {"element": "option", "value":"2", "text":"Option 2"},
+                        {"element": "option", "value":"3", "text":"Option 3"}
+                    ]
+                },
+                {
+                    "element":"input",
+                    "type":"radio",
+                    "name":"radio_options[]",
+                    "radioElements":[
+                        {"element":"label", "text":"Radio 1", "value": 1}
+                    ]
+                },
+                {
+                    "element":"input",
+                    "type":"checkbox",
+                    "name":"checkbox_options[]",
+                    "radioElements":[
+                        {"element":"label", "text":"Checkbox 1", "value": 1}
+                    ]
+                },
+                {
+                    "element": "input", 
+                    "list": "categories", 
+                    "name":"categories[]",
+                    "options": [
+                        {"element": "option", "value":"Colombia", "text":"Colombia"},
+                        {"element": "option", "value":"Brasil", "text":"Brasil"}
+                    ]
+                }
+            ]
+        },
+        {
+            "tableId":"tabla2",
+            "addButton":"btnAgregar",
+            "deleteButton":{"element":"button", "type":"button", "class":"BtnBorrar", "name":"btnBorrar", "text":"-"},
+            "totalCells":7,
+            "cellElement": [
+                {"element":"input", "type":"text", "class":null, "name":"name[]"},
+                {"element":"input", "type":"text", "class":null, "name":"lastname[]"},
+                {
+                    "element":"select",
+                    "name":"country[]",
+                    "options": [
+                        {"element": "option", "value":"1", "text":"Option 1"},
+                        {"element": "option", "value":"2", "text":"Option 2"},
+                        {"element": "option", "value":"3", "text":"Option 3"},
+                        {"element": "option", "value":"4", "text":"Option 4"},
+                        {"element": "option", "value":"5", "text":"Option 5"},
+                        {"element": "option", "value":"6", "text":"Option 6"}
+                    ]
+                },
+                {
+                    "element":"input",
+                    "type":"radio",
+                    "name":"radio_options[]",
+                    "radioElements":[
+                        {"element":"label", "text":"Radio 1", "value": 1},
+                        {"element":"label", "text":"Radio 2", "value": 2},
+                        {"element":"label", "text":"Radio 3", "value": 3}
+                    ]
+                },
+                {
+                    "element":"input",
+                    "type":"checkbox",
+                    "name":"checkbox_options[]",
+                    "radioElements":[
+                        {"element":"label", "text":"Checkbox 1", "value": 1},
+                        {"element":"label", "text":"Checkbox 2", "value": 2},
+                        {"element":"label", "text":"Checkbox 3", "value": 3}
+                    ]
+                },
+                {
+                    "element": "input", 
+                    "list": "categories", 
+                    "name":"categories[]",
+                    "options": [
+                        {"element": "option", "value":"Colombia", "text":"Colombia"},
+                        {"element": "option", "value":"Brasil", "text":"Brasil"},
+                        {"element": "option", "value":"Venezuela", "text":"Venezuela"},
+                        {"element": "option", "value":"Perú", "text":"Perú"},
+                        {"element": "option", "value":"Chile", "text":"Chile"},
+                        {"element": "option", "value":"Argentina", "text":"Argentina"}
+                    ]
+                }
+            ]
+        }];
+```
+
 <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/soloenbinario">
     <img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg" alt="Buy me a coffee" />
     <span style="margin-left:5px">Buy me a coffee</span>
