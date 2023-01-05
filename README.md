@@ -1,4 +1,4 @@
-# TableJSApi
+# TableJSAPI
 API Javascript para el manejo de tablas.
 
 El API se encarga de:
