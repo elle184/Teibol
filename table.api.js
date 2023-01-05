@@ -1,9 +1,5 @@
 window.onload = function() {
-    try {
-        var tabla = document.getElementById(jsonObject.tableId);
-        var botonesCrearFila = document.getElementsByClassName(jsonObject.addButton);
-        var cantidadCeldasInicial = jsonObject.totalCells;
-        
+    try {        
         /**
          * 1- Obtener el número de filas
          * 2- Crear un nuevo elemento de tipo td
@@ -12,22 +8,24 @@ window.onload = function() {
          * 4- Se crean las nuevas celdas en función a la cantidad de celdas
          *    de la fila anterior.
          */
-        function crearFila(evento) {
-            var tableBody = tabla.tBodies[0];
+        function crearFila(event) {
+            let table = event.srcElement.parentElement.parentElement;
+            let tableObject = getJsonObject(table.id);
+            var tableBody = event.srcElement.parentElement.parentElement.tBodies[0];
             var totalFilas = tableBody.rows.length;
-            var totalCeldas = cantidadCeldasInicial;
+            let totalCells = table.dataset.initialCellsAmmount;
             var filaActual = totalFilas;
 
             //Se crea una nueva fila
             tableBody.appendChild(agregarFila(filaActual));
 
-            for (var c = 0; c < totalCeldas; c++) {
+            for (var c = 0; c < totalCells; c++) {
                 /*
                 * Esta validación determina si queremos colocar un elemento
                 * especial en la última celda de la última fila creada. 
                 */
-                if (c == (totalCeldas - 1)) {
-                    var botonBorrar = crearElemento(jsonObject.deleteButton);
+                if (c == (totalCells - 1)) {
+                    var botonBorrar = crearElemento(tableObject.deleteButton);
                     botonBorrar.onclick = borrarFila;
 
                     tableBody.rows[filaActual]
@@ -36,7 +34,7 @@ window.onload = function() {
                 } else {
                     tableBody.rows[filaActual]
                     .insertCell(c)
-                    .appendChild(crearElemento(jsonObject.cellElement[c]));
+                    .appendChild(crearElemento(tableObject.cellElement[c]));
                 }
             }
 
@@ -175,17 +173,34 @@ window.onload = function() {
             return fila;
         }
 
+        function getJsonObject(tableId) {
+            for (let t in jsonObject) {
+                if (tableId === jsonObject[t].tableId) {
+                    return jsonObject[t];
+                }
+            }
+        }
+
         /*
         * A cada fila se le agrega un atributo de tipo dataset para identificar 
         * el número de fila en próximas validaciones. 
         */
-        for (var f = 0; f < tabla.tBodies[0].rows.length; f++) {
-            tabla.tBodies[0].rows[f].setAttribute("data-fila", f);
+        for (let t in jsonObject) {
+            let table = document.getElementById(jsonObject[t].tableId);
+            let createRowButtons = document.getElementsByClassName(jsonObject[t].addButton);
+            let initialCellsAmmount = jsonObject[t].totalCells;
+
+            table.setAttribute("data-initial-cells-ammount", initialCellsAmmount);
+
+            for (var f = 0; f < table.tBodies[0].rows.length; f++) {
+                table.tBodies[0].rows[f].setAttribute("data-fila", f);
+            }
+
+            for (var f in createRowButtons) {
+                createRowButtons[f].onclick = crearFila;
+            }
         }
-        
-        for (var f in botonesCrearFila) {
-            botonesCrearFila[f].onclick = crearFila;
-        }
+    
     } catch (excepcion) {
         this.console.error(excepcion.message);
         this.console.error("Los par\u00E1metros para la tabla no est\u00E1n definidos. Construye el objeto JSON con la estructura definida en https://elle184.github.io/TableJsApi/");
