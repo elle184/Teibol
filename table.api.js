@@ -42,7 +42,7 @@ window.onload = function() {
              * Se obtienen todos los botones que se encargan de borrar su respectiva fila y se les 
              * agrega la función de borrado.
              */
-            var botonesBorrarFila = document.getElementsByClassName(jsonObject.deleteButton.classAttribute);
+            var botonesBorrarFila = document.getElementsByClassName(tableObject.deleteButton.classAttribute);
 
             for (var f in botonesBorrarFila) {
                 botonesBorrarFila[f].onclick = borrarFila; 
@@ -52,11 +52,15 @@ window.onload = function() {
         /**
          * Método encargado de borrar una fila seleccionada.
          * 
-         * @param {MouseEvent} evento 
+         * @param {MouseEvent} event
          */
-        function borrarFila(evento) {
+        function borrarFila(event) {
+            let table = event.srcElement.parentElement.parentElement.parentElement.parentElement;
+
+            let tableObject = getJsonObject(table.id);
+
             //Se declara el table body actual.
-            var tableBody = tabla.tBodies[0];
+            var tableBody = event.srcElement.parentElement.parentElement.parentElement;
 
             //Se declara el ID de la primera fila. 
             var primeraFila = 0;
@@ -65,12 +69,12 @@ window.onload = function() {
             var ultimaFila = tableBody.rows.length - 1;
             
             //Se obtiene el ID de la fila que se esta borrando.
-            var idFila = evento.srcElement.parentElement.parentElement.getAttribute("data-fila");
+            var idFila = event.srcElement.parentElement.parentElement.getAttribute("data-fila");
             
             //Se valida si se esta borrando la primera fila 
             if (idFila == primeraFila) {
                 //Se borra la fila
-                tableBody.deleteRow(evento.srcElement.parentElement.parentElement.getAttribute("data-fila"));
+                tableBody.deleteRow(event.srcElement.parentElement.parentElement.getAttribute("data-fila"));
                 
                 /*
                 * Se realiza un recorrido por las filas que quedaron y se 
@@ -84,7 +88,7 @@ window.onload = function() {
             }
             
             if (idFila > primeraFila && idFila < ultimaFila) {
-                tableBody.deleteRow(evento.srcElement.parentElement.parentElement.getAttribute("data-fila"));
+                tableBody.deleteRow(event.srcElement.parentElement.parentElement.getAttribute("data-fila"));
                 
                 for (var i = idFila; i < ultimaFila; i++) {
                     tableBody.rows[i].setAttribute("data-fila", i);
@@ -93,10 +97,10 @@ window.onload = function() {
             
             //Se borra la fila seleccionada.
             if (idFila == ultimaFila && tableBody.rows.length > 0) {
-                tableBody.deleteRow(evento.srcElement.parentElement.parentElement.getAttribute("data-fila"));
+                tableBody.deleteRow(event.srcElement.parentElement.parentElement.getAttribute("data-fila"));
             }
 
-            var botonesBorrarFila = document.getElementsByClassName(jsonObject.deleteButton.class);
+            var botonesBorrarFila = document.getElementsByClassName(tableObject.deleteButton.class);
 
             for (var f in botonesBorrarFila) {
                 botonesBorrarFila[f].onclick = borrarFila;
