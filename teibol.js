@@ -1,5 +1,8 @@
 window.onload = function() {
-    try {        
+    try {
+        const DATALIST = "datalist";
+        const SELECT = "select";
+
         /**
          * 1- Obtener el número de filas
          * 2- Crear un nuevo elemento de tipo td
@@ -17,7 +20,7 @@ window.onload = function() {
             var filaActual = totalFilas;
 
             //Se crea una nueva fila
-            tableBody.appendChild(agregarFila(filaActual));
+            tableBody.appendChild(addRow(filaActual));
 
             for (var c = 0; c < totalCells; c++) {
                 /*
@@ -116,35 +119,34 @@ window.onload = function() {
             var element = document.createElement(elemento.element);
             
             //Se verifica si el elemento name esta definido.
-            if (elemento.name !=  undefined && elemento.name != null) {
+            if (isDefined(elemento.name)) {
                 element.setAttribute("name", elemento.name);
             }
 
             //Valida que el atributo type este definido.
-            if (elemento.type != undefined && elemento.type != null) {
+            if (isDefined(elemento.type)) {
                 element.setAttribute("type", elemento.type);
             }
 
             //Valida que el atributo class este definido.
-            if (elemento.classAttribute != undefined && elemento.classAttribute != null) { 
+            if (isDefined(elemento.classAttribute)) { 
                 element.setAttribute("class", elemento.classAttribute); 
             }
 
             //Se verifica si el elemento text esta definido.
-            if (elemento.text != undefined && elemento.text != null) {
+            if (isDefined(elemento.text)) {
                 var textNode = document.createTextNode(elemento.text);
                 element.appendChild(textNode);
             }
 
-            if (elemento.options != null && elemento.options.length > 0) {
-                for (var o in elemento.options) {
-                    var option = document.createElement(elemento.options[o].element);
-                    var text = document.createTextNode(elemento.options[o].text);
-                    option.setAttribute("value", elemento.options[o].value);
-                    option.appendChild(text);
+            if (isDefined(elemento.list)) {
+                element.setAttribute("list", elemento.list);
+            }
 
-                    element.appendChild(option);
-                }
+            if (isDefined(elemento.options) && elemento.options.length > 0) {
+                let elementType = (Object.is(SELECT, elemento.element) ? SELECT : DATALIST);
+
+                createOptionList(elementType, elemento.options, element);
             }
 
             if (element.type == "radio" || element.type == "checkbox") {
@@ -171,9 +173,10 @@ window.onload = function() {
          * 
          * @returns {HTMLElementTagNameMap}:    Retorna el objeto DOM de tipo tr
          */
-        function agregarFila(numFila) {
+        function addRow(rowNumber) {
             var fila = document.createElement("tr");
-            fila.setAttribute("data-fila", numFila);
+            fila.setAttribute("data-fila", rowNumber);
+
             return fila;
         }
 
@@ -186,9 +189,43 @@ window.onload = function() {
         }
 
         /*
-        * A cada fila se le agrega un atributo de tipo dataset para identificar 
-        * el número de fila en próximas validaciones. 
-        */
+         * Function that validates if a json attribute is defined and has data.
+         */
+        function isDefined(elementAttribute) {
+            return (undefined != elementAttribute && null != elementAttribute);
+        }
+
+        function createOptionList(elementType, optionsList, newElement) {
+            let newDataList = null;
+
+            if (Object.is(DATALIST, elementType)
+            && undefined == document.getElementById(newElement.getAttribute("list"))) {
+                newDataList = document.createElement("datalist");
+                newDataList.setAttribute("id", newElement.getAttribute("list"));
+            }
+
+            for (let option of optionsList) {
+                let newOption = document.createElement(option.element);
+                let text = document.createTextNode(option.text);
+                newOption.setAttribute("value", option.value);
+
+                if (Object.is(SELECT, elementType)) {
+                    newOption.appendChild(text);
+                    newElement.appendChild(newOption);
+                } else if (null != newDataList) {
+                    newDataList.appendChild(newOption);
+                }
+            }
+
+            if (null != newDataList) {
+                document.body.appendChild(newDataList);
+            }
+        }
+
+        /*
+         * A cada fila se le agrega un atributo de tipo dataset para identificar 
+         * el número de fila en próximas validaciones. 
+         */
         for (let t in jsonObject) {
             let table = document.getElementById(jsonObject[t].tableId);
             let createRowButtons = document.getElementsByClassName(jsonObject[t].addButton);
