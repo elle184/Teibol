@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Sans-serif";
+}
+
+body {
+    background-color: #DBD6CB;
+    color: #171717;
+}
+
+header {
+    margin: 0 auto;
+}
+
+header h1 {
+    text-align: center;
+}
+
+button {
+    padding: 2px;
+    border-radius: 2px;
+    width: 32px;
+    height: 32px;
+}
+
+button.btnAgregar {
+    background-color: #55efc4;
+    border-color: #55efc4;
+    border: 1px solid #55efc4;
+}
+
+button.btnAgregar:hover {
+    background-color: #81ecec;
+    border-color: #81ecec;
+}
+
+button.BtnBorrar {
+    background-color: #ff7675;
+    border-color: #ff7675;
+}
+
+button.BtnBorrar:hover {
+    background-color: #fab1a0;
+    border-color: #fab1a0;
+}
+
+table, button.btnAgregar {
+    margin: 10px;
+}
+
+table {
+    margin: 0 auto;
+    border: 1px solid #dfe6e9;
+    border-collapse: collapse;
+    padding: 2px;
+}
+
+td {
+    padding: 5px 10px;
+}
+
+table caption {
+    border-color: #FFF;
+}
+
+.ActionsMenu * {
+    float: right;
+}
