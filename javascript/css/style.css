@@ -71,14 +71,21 @@ table caption {
 }
 
 #menu {
-    border: 1px solid black;
-    padding: 4px 0;
+    border-radius: 2px;
+
+    padding: 10px 0;
     margin: 0 4px;
+    background-color: #B4D9C9;
+    box-shadow: 2px 2px 2px #887B8C;
 }
 
 #menu ul li {
     display: inline;
-    border: 1px solid black;
-    margin: 2px;
-    padding: 2px;
+    border-radius: 2px;
+    margin: 2px 4px;
+    padding: 6px 6px;
+}
+
+#menu ul li:hover {
+    background-color: #CFB4D9;
 }

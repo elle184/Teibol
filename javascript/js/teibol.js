@@ -14,7 +14,7 @@ window.onload = function() {
         function createRow(event) {
             let table = document.getElementById(event.srcElement.dataset.tableName);
             let tableObject = getJsonObject(table.id);
-            var tableBody = event.srcElement.parentElement.parentElement.tBodies[0];
+            var tableBody = table.tBodies[0];
             var totalFilas = tableBody.rows.length;
             let totalCells = table.dataset.initialCellsAmmount;
             var filaActual = totalFilas;
@@ -24,9 +24,9 @@ window.onload = function() {
 
             for (var c = 0; c < totalCells; c++) {
                 /*
-                * Esta validación determina si queremos colocar un elemento
-                * especial en la última celda de la última fila creada. 
-                */
+                 * Esta validación determina si queremos colocar un elemento
+                 * especial en la última celda de la última fila creada. 
+                 */
                 if (c == (totalCells - 1)) {
                     let deleteButton = crearElemento(tableObject.deleteButton);
                     deleteButton.setAttribute("data-table-name", tableObject.tableId);
@@ -148,14 +148,12 @@ window.onload = function() {
                 element.setAttribute("list", elemento.list);
             }
 
-            if (isDefined(elemento.options) && elemento.options.length > 0) {
-                let elementType = (Object.is(SELECT, elemento.element) ? SELECT : DATALIST);
+            let elementType = (Object.is(SELECT, elemento.element) ? SELECT : DATALIST);
 
-                createOptionList(
-                    elementType, 
-                    (jsonObject.commonOptions?.options ?? elemento.options), 
-                    element);
-            }
+            createOptionList(
+                elementType, 
+                (jsonObject.commonOptions?.options ?? elemento.options), 
+                element);
 
             if (element.type == "radio" || element.type == "checkbox") {
                 element = document.createElement("span");
