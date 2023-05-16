@@ -41,7 +41,7 @@ window.onload = function() {
                         .insertCell(c)
                         .appendChild(crearElemento(tableObject.cellElement[c]));
                     } catch (exception) {
-                        console.log("La cantidad de celdas definidas en totalCells es mayor a la cantidad de campos a construir.");
+                        console.log(exception.message);
                     }
                 }
             }
@@ -152,7 +152,7 @@ window.onload = function() {
 
             createOptionList(
                 elementType, 
-                (jsonObject.commonOptions?.options ?? elemento.options), 
+                (jsonObject.commonOptions?.options ?? elemento?.options), 
                 element);
 
             if (element.type == "radio" || element.type == "checkbox") {
@@ -211,31 +211,33 @@ window.onload = function() {
         function createOptionList(elementType, optionsList, newElement) {
             let newDataList = null;
 
-            /**
-             * Validates if a request needs to create a new datalist element and
-             * verifies exists the list attribute into the JSON object.
-             */
-            if (Object.is(DATALIST, elementType)
-            && undefined == document.getElementById(newElement.getAttribute("list"))) {
-                newDataList = document.createElement("datalist");
-                newDataList.setAttribute("id", newElement.getAttribute("list"));
-            }
-
-            for (let option of optionsList) {
-                let newOption = document.createElement(option.element);
-                let text = document.createTextNode(option.text);
-                newOption.setAttribute("value", option.value);
-
-                if (Object.is(SELECT, elementType)) {
-                    newOption.appendChild(text);
-                    newElement.appendChild(newOption);
-                } else if (null != newDataList) {
-                    newDataList.appendChild(newOption);
+            if (undefined !== optionsList && null !== optionsList) {
+                /**
+                 * Validates if a request needs to create a new datalist element and
+                 * verifies exists the list attribute into the JSON object.
+                 */
+                if (Object.is(DATALIST, elementType)
+                && undefined == document.getElementById(newElement.getAttribute("list"))) {
+                    newDataList = document.createElement("datalist");
+                    newDataList.setAttribute("id", newElement.getAttribute("list"));
                 }
-            }
 
-            if (null != newDataList) {
-                document.body.appendChild(newDataList);
+                for (let option of optionsList) {
+                    let newOption = document.createElement(option.element);
+                    let text = document.createTextNode(option.text);
+                    newOption.setAttribute("value", option.value);
+
+                    if (Object.is(SELECT, elementType)) {
+                        newOption.appendChild(text);
+                        newElement.appendChild(newOption);
+                    } else if (null != newDataList) {
+                        newDataList.appendChild(newOption);
+                    }
+                }
+
+                if (null != newDataList) {
+                    document.body.appendChild(newDataList);
+                }
             }
         }
 
