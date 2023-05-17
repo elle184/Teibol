@@ -2,7 +2,7 @@ window.onload = function() {
     try {
         const DATALIST = "datalist";
         const SELECT = "select";
-
+        
         /**
          * 1- Obtener el número de filas
          * 2- Crear un nuevo elemento de tipo td
@@ -11,10 +11,10 @@ window.onload = function() {
          * 4- Se crean las nuevas celdas en función a la cantidad de celdas
          *    de la fila anterior.
          */
-        function crearFila(event) {
-            let table = event.srcElement.parentElement.parentElement;
+        function createRow(event) {
+            let table = document.getElementById(event.srcElement.dataset.tableName);
             let tableObject = getJsonObject(table.id);
-            var tableBody = event.srcElement.parentElement.parentElement.tBodies[0];
+            var tableBody = table.tBodies[0];
             var totalFilas = tableBody.rows.length;
             let totalCells = table.dataset.initialCellsAmmount;
             var filaActual = totalFilas;
@@ -24,20 +24,25 @@ window.onload = function() {
 
             for (var c = 0; c < totalCells; c++) {
                 /*
-                * Esta validación determina si queremos colocar un elemento
-                * especial en la última celda de la última fila creada. 
-                */
+                 * Esta validación determina si queremos colocar un elemento
+                 * especial en la última celda de la última fila creada. 
+                 */
                 if (c == (totalCells - 1)) {
-                    var botonBorrar = crearElemento(tableObject.deleteButton);
-                    botonBorrar.onclick = borrarFila;
+                    let deleteButton = crearElemento(tableObject.deleteButton);
+                    deleteButton.setAttribute("data-table-name", tableObject.tableId);
+                    deleteButton.onclick = borrarFila;
 
                     tableBody.rows[filaActual]
                     .insertCell(c)
-                    .appendChild(botonBorrar);
+                    .appendChild(deleteButton);
                 } else {
-                    tableBody.rows[filaActual]
-                    .insertCell(c)
-                    .appendChild(crearElemento(tableObject.cellElement[c]));
+                    try {
+                        tableBody.rows[filaActual]
+                        .insertCell(c)
+                        .appendChild(crearElemento(tableObject.cellElement[c]));
+                    } catch (exception) {
+                        console.log(exception.message);
+                    }
                 }
             }
 
@@ -45,10 +50,10 @@ window.onload = function() {
              * Se obtienen todos los botones que se encargan de borrar su respectiva fila y se les 
              * agrega la función de borrado.
              */
-            var botonesBorrarFila = document.getElementsByClassName(tableObject.deleteButton.classAttribute);
+            var deleteRowButtons = document.getElementsByClassName(tableObject.deleteButton.classAttribute);
 
-            for (var f in botonesBorrarFila) {
-                botonesBorrarFila[f].onclick = borrarFila; 
+            for (var deleteRowButton of deleteRowButtons) {
+                deleteRowButton.onclick = borrarFila; 
             }
         };
         
@@ -58,12 +63,12 @@ window.onload = function() {
          * @param {MouseEvent} event
          */
         function borrarFila(event) {
-            let table = event.srcElement.parentElement.parentElement.parentElement.parentElement;
+            let table = document.getElementById(event.srcElement.dataset.tableName);
 
             let tableObject = getJsonObject(table.id);
 
             //Se declara el table body actual.
-            var tableBody = event.srcElement.parentElement.parentElement.parentElement;
+            var tableBody = table.tBodies[0];
 
             //Se declara el ID de la primera fila. 
             var primeraFila = 0;
@@ -143,11 +148,12 @@ window.onload = function() {
                 element.setAttribute("list", elemento.list);
             }
 
-            if (isDefined(elemento.options) && elemento.options.length > 0) {
-                let elementType = (Object.is(SELECT, elemento.element) ? SELECT : DATALIST);
+            let elementType = (Object.is(SELECT, elemento.element) ? SELECT : DATALIST);
 
-                createOptionList(elementType, elemento.options, element);
-            }
+            createOptionList(
+                elementType, 
+                (jsonObject.commonOptions?.options ?? elemento?.options), 
+                element);
 
             if (element.type == "radio" || element.type == "checkbox") {
                 element = document.createElement("span");
@@ -180,10 +186,17 @@ window.onload = function() {
             return fila;
         }
 
+        /**
+         * Returns the respectively table properties defined into the Teibol's 
+         * JSON Object.
+         * 
+         * @param {*} tableId 
+         * @returns 
+         */
         function getJsonObject(tableId) {
-            for (let t in jsonObject) {
-                if (tableId === jsonObject[t].tableId) {
-                    return jsonObject[t];
+            for (let t of jsonObject.tables) {
+                if (tableId === t.tableId) {
+                    return t;
                 }
             }
         }
@@ -198,27 +211,33 @@ window.onload = function() {
         function createOptionList(elementType, optionsList, newElement) {
             let newDataList = null;
 
-            if (Object.is(DATALIST, elementType)
-            && undefined == document.getElementById(newElement.getAttribute("list"))) {
-                newDataList = document.createElement("datalist");
-                newDataList.setAttribute("id", newElement.getAttribute("list"));
-            }
-
-            for (let option of optionsList) {
-                let newOption = document.createElement(option.element);
-                let text = document.createTextNode(option.text);
-                newOption.setAttribute("value", option.value);
-
-                if (Object.is(SELECT, elementType)) {
-                    newOption.appendChild(text);
-                    newElement.appendChild(newOption);
-                } else if (null != newDataList) {
-                    newDataList.appendChild(newOption);
+            if (undefined !== optionsList && null !== optionsList) {
+                /**
+                 * Validates if a request needs to create a new datalist element and
+                 * verifies exists the list attribute into the JSON object.
+                 */
+                if (Object.is(DATALIST, elementType)
+                && undefined == document.getElementById(newElement.getAttribute("list"))) {
+                    newDataList = document.createElement("datalist");
+                    newDataList.setAttribute("id", newElement.getAttribute("list"));
                 }
-            }
 
-            if (null != newDataList) {
-                document.body.appendChild(newDataList);
+                for (let option of optionsList) {
+                    let newOption = document.createElement(option.element);
+                    let text = document.createTextNode(option.text);
+                    newOption.setAttribute("value", option.value);
+
+                    if (Object.is(SELECT, elementType)) {
+                        newOption.appendChild(text);
+                        newElement.appendChild(newOption);
+                    } else if (null != newDataList) {
+                        newDataList.appendChild(newOption);
+                    }
+                }
+
+                if (null != newDataList) {
+                    document.body.appendChild(newDataList);
+                }
             }
         }
 
@@ -226,10 +245,10 @@ window.onload = function() {
          * A cada fila se le agrega un atributo de tipo dataset para identificar 
          * el número de fila en próximas validaciones. 
          */
-        for (let t in jsonObject) {
-            let table = document.getElementById(jsonObject[t].tableId);
-            let createRowButtons = document.getElementsByClassName(jsonObject[t].addButton);
-            let initialCellsAmmount = jsonObject[t].totalCells;
+        for (let t of jsonObject.tables) {
+            let table = document.getElementById(t.tableId);
+            let createRowButtons = document.getElementsByClassName(t.addButton);
+            let initialCellsAmmount = t.totalCells;
 
             table.setAttribute("data-initial-cells-ammount", initialCellsAmmount);
 
@@ -237,11 +256,12 @@ window.onload = function() {
                 table.tBodies[0].rows[f].setAttribute("data-fila", f);
             }
 
-            for (var f in createRowButtons) {
-                createRowButtons[f].onclick = crearFila;
+            for (var createButton of createRowButtons) {
+                createButton.setAttribute("data-table-name", t.tableId);
+
+                table.onclick = createRow;
             }
         }
-    
     } catch (excepcion) {
         this.console.error(excepcion.message);
         this.console.error("Los par\u00E1metros para la tabla no est\u00E1n definidos. Construye el objeto JSON con la estructura definida en https://elle184.github.io/TableJsApi/");
