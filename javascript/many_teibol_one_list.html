@@ -21,7 +21,7 @@
         <div>
             <table id="tableOne">
                 <caption class="ActionsMenu">
-                    <button type="button" class="addButton">+</button>
+                    <button type="button" id="addButton1" class="addButton">+</button>
                 </caption>
                 <thead>
                     <tr>
@@ -41,7 +41,7 @@
         <div>
             <table id="tabla2">
                 <caption class="ActionsMenu">
-                    <button type="button" class="btnAgregar">+</button>
+                    <button type="button" id="addButton2" class="btnAgregar">+</button>
                 </caption>
                 <thead>
                     <tr>
@@ -64,7 +64,7 @@
             tables : [
                 {
                     tableId : "tableOne",
-                    addButton : "addButton",
+                    addButton : "addButton1",
                     deleteButton : {
                         "element":"button"
                         , "type":"button"
@@ -116,7 +116,7 @@
                 },
                 {
                     "tableId":"tabla2",
-                    "addButton":"btnAgregar",
+                    "addButton":"addButton2",
                     "deleteButton":{
                         "element":"button"
                         , "type":"button"

@@ -247,20 +247,19 @@ window.onload = function() {
          */
         for (let t of jsonObject.tables) {
             let table = document.getElementById(t.tableId);
-            let createRowButtons = document.getElementsByClassName(t.addButton);
+            let createRowButton = document.getElementById(t.addButton);
             let initialCellsAmmount = t.totalCells;
+            let dataRowCount = 0
 
             table.setAttribute("data-initial-cells-ammount", initialCellsAmmount);
 
-            for (var f = 0; f < table.tBodies[0].rows.length; f++) {
-                table.tBodies[0].rows[f].setAttribute("data-fila", f);
+            for (let row of table.tBodies[0].rows) {
+                row.setAttribute("data-fila", dataRowCount);
+                dataRowCount++;
             }
 
-            for (var createButton of createRowButtons) {
-                createButton.setAttribute("data-table-name", t.tableId);
-
-                table.onclick = createRow;
-            }
+            createRowButton.setAttribute("data-table-name", t.tableId);
+            createRowButton.onclick = createRow;
         }
     } catch (excepcion) {
         this.console.error(excepcion.message);
