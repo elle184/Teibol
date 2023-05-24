@@ -249,16 +249,17 @@ window.onload = function() {
             let table = document.getElementById(t.tableId);
             let createRowButton = document.getElementById(t.addButton);
             let initialCellsAmmount = t.totalCells;
+            let dataRowCount = 0
 
             table.setAttribute("data-initial-cells-ammount", initialCellsAmmount);
 
-            for (var f = 0; f < table.tBodies[0].rows.length; f++) {
-                table.tBodies[0].rows[f].setAttribute("data-fila", f);
+            for (let row of table.tBodies[0].rows) {
+                row.setAttribute("data-fila", dataRowCount);
+                dataRowCount++;
             }
 
             createRowButton.setAttribute("data-table-name", t.tableId);
-
-            table.onclick = createRow;
+            createRowButton.onclick = createRow;
         }
     } catch (excepcion) {
         this.console.error(excepcion.message);
