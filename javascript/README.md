@@ -65,7 +65,7 @@ var jsonObject = [{
         {
             "element":"input",
             "type":"radio",
-            "name":"radio_options[]",
+            "name":"radio_options_[number]_[]",
             "radioElements":[
                 {"element":"label", "text":"Radio 1", "value": 1},
                 {"element":"label", "text":"Radio 2", "value": 2},
@@ -75,7 +75,7 @@ var jsonObject = [{
         {
             "element":"input",
             "type":"checkbox",
-            "name":"checkbox_options[]",
+            "name":"checkbox_options_[number]_[]",
             "radioElements":[
                 {"element":"label", "text":"Checkbox 1", "value": 1},
                 {"element":"label", "text":"Checkbox 2", "value": 2},
@@ -155,7 +155,7 @@ var jsonObject = [{
                 {
                     "element":"input",
                     "type":"radio",
-                    "name":"radio_options[]",
+                    "name":"radio_options_[number]_[]",
                     "radioElements":[
                         {"element":"label", "text":"Radio 1", "value": 1}
                     ]
@@ -163,7 +163,7 @@ var jsonObject = [{
                 {
                     "element":"input",
                     "type":"checkbox",
-                    "name":"checkbox_options[]",
+                    "name":"checkbox_options_[number]_[]",
                     "radioElements":[
                         {"element":"label", "text":"Checkbox 1", "value": 1}
                     ]
@@ -202,7 +202,7 @@ var jsonObject = [{
                 {
                     "element":"input",
                     "type":"radio",
-                    "name":"radio_options[]",
+                    "name":"radio_options_[number]_[]",
                     "radioElements":[
                         {"element":"label", "text":"Radio 1", "value": 1},
                         {"element":"label", "text":"Radio 2", "value": 2},
@@ -212,7 +212,7 @@ var jsonObject = [{
                 {
                     "element":"input",
                     "type":"checkbox",
-                    "name":"checkbox_options[]",
+                    "name":"checkbox_options_[number]_[]",
                     "radioElements":[
                         {"element":"label", "text":"Checkbox 1", "value": 1},
                         {"element":"label", "text":"Checkbox 2", "value": 2},
