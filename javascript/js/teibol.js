@@ -1,8 +1,8 @@
-window.onload = function() {
+window.onload = function () {
     try {
         const DATALIST = "datalist";
         const SELECT = "select";
-        
+
         /**
          * 1- Obtener el número de filas
          * 2- Crear un nuevo elemento de tipo td
@@ -33,13 +33,13 @@ window.onload = function() {
                     deleteButton.onclick = borrarFila;
 
                     tableBody.rows[filaActual]
-                    .insertCell(c)
-                    .appendChild(deleteButton);
+                        .insertCell(c)
+                        .appendChild(deleteButton);
                 } else {
                     try {
                         tableBody.rows[filaActual]
-                        .insertCell(c)
-                        .appendChild(crearElemento(tableObject.cellElement[c]));
+                            .insertCell(c)
+                            .appendChild(crearElemento(tableObject.cellElement[c]));
                     } catch (exception) {
                         console.log(exception.message);
                     }
@@ -53,10 +53,10 @@ window.onload = function() {
             var deleteRowButtons = document.getElementsByClassName(tableObject.deleteButton.classAttribute);
 
             for (var deleteRowButton of deleteRowButtons) {
-                deleteRowButton.onclick = borrarFila; 
+                deleteRowButton.onclick = borrarFila;
             }
         };
-        
+
         /**
          * Método encargado de borrar una fila seleccionada.
          * 
@@ -72,18 +72,18 @@ window.onload = function() {
 
             //Se declara el ID de la primera fila. 
             var primeraFila = 0;
-            
+
             //Se declara el ID de la última fila.
             var ultimaFila = tableBody.rows.length - 1;
-            
+
             //Se obtiene el ID de la fila que se esta borrando.
             var idFila = event.srcElement.parentElement.parentElement.getAttribute("data-fila");
-            
+
             //Se valida si se esta borrando la primera fila 
             if (idFila == primeraFila) {
                 //Se borra la fila
                 tableBody.deleteRow(event.srcElement.parentElement.parentElement.getAttribute("data-fila"));
-                
+
                 /*
                 * Se realiza un recorrido por las filas que quedaron y se 
                 * les reasigna un nuevo ID de fila. Esto se hace para evitar
@@ -94,15 +94,15 @@ window.onload = function() {
                     tableBody.rows[i].setAttribute("data-fila", i);
                 }
             }
-            
+
             if (idFila > primeraFila && idFila < ultimaFila) {
                 tableBody.deleteRow(event.srcElement.parentElement.parentElement.getAttribute("data-fila"));
-                
+
                 for (var i = idFila; i < ultimaFila; i++) {
                     tableBody.rows[i].setAttribute("data-fila", i);
                 }
             }
-            
+
             //Se borra la fila seleccionada.
             if (idFila == ultimaFila && tableBody.rows.length > 0) {
                 tableBody.deleteRow(event.srcElement.parentElement.parentElement.getAttribute("data-fila"));
@@ -122,7 +122,7 @@ window.onload = function() {
          */
         function crearElemento(elemento) {
             var element = document.createElement(elemento.element);
-            
+
             //Se verifica si el elemento name esta definido.
             if (isDefined(elemento.name)) {
                 element.setAttribute("name", elemento.name);
@@ -134,8 +134,8 @@ window.onload = function() {
             }
 
             //Valida que el atributo class este definido.
-            if (isDefined(elemento.classAttribute)) { 
-                element.setAttribute("class", elemento.classAttribute); 
+            if (isDefined(elemento.classAttribute)) {
+                element.setAttribute("class", elemento.classAttribute);
             }
 
             //Se verifica si el elemento text esta definido.
@@ -151,8 +151,8 @@ window.onload = function() {
             let elementType = (Object.is(SELECT, elemento.element) ? SELECT : DATALIST);
 
             createOptionList(
-                elementType, 
-                (jsonObject.commonOptions?.options ?? elemento?.options), 
+                elementType,
+                (jsonObject.commonOptions?.options ?? elemento?.options),
                 element);
 
             if (element.type == "radio" || element.type == "checkbox") {
@@ -164,7 +164,7 @@ window.onload = function() {
                         let radioCheckboxElement = document.createElement(elemento.element);
                         radioCheckboxElement.setAttribute("type", elemento.type);
                         radioCheckboxElement.setAttribute(
-                            "name", 
+                            "name",
                             elemento.name.replace('[number]', randomNumber));
                         radioCheckboxElement.setAttribute("value", elemento.radioElements[r].value);
 
@@ -220,7 +220,7 @@ window.onload = function() {
                  * verifies exists the list attribute into the JSON object.
                  */
                 if (Object.is(DATALIST, elementType)
-                && undefined == document.getElementById(newElement.getAttribute("list"))) {
+                    && undefined == document.getElementById(newElement.getAttribute("list"))) {
                     newDataList = document.createElement("datalist");
                     newDataList.setAttribute("id", newElement.getAttribute("list"));
                 }
