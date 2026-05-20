@@ -12,15 +12,16 @@ window.onload = function() {
          *    de la fila anterior.
          */
         function createRow(event) {
-            let table = document.getElementById(event.srcElement.dataset.tableName);
+            let table = document.getElementById(
+                    event.srcElement.dataset.tableName);
             let tableObject = getJsonObject(table.id);
-            var tableBody = table.tBodies[0];
-            var totalFilas = tableBody.rows.length;
+            let tableBody = table.tBodies[0];
+            let totalRows = tableBody.rows.length;
             let totalCells = table.dataset.initialCellsAmmount;
-            var filaActual = totalFilas;
+            let actualRow = totalRows;
 
             //Se crea una nueva fila
-            tableBody.appendChild(addRow(filaActual));
+            tableBody.appendChild(addRow(actualRow));
 
             for (var c = 0; c < totalCells; c++) {
                 /*
@@ -28,18 +29,18 @@ window.onload = function() {
                  * especial en la última celda de la última fila creada. 
                  */
                 if (c == (totalCells - 1)) {
-                    let deleteButton = crearElemento(tableObject.deleteButton);
+                    let deleteButton = createElement(tableObject.deleteButton);
                     deleteButton.setAttribute("data-table-name", tableObject.tableId);
-                    deleteButton.onclick = borrarFila;
+                    deleteButton.onclick = deleteRow;
 
-                    tableBody.rows[filaActual]
+                    tableBody.rows[actualRow]
                     .insertCell(c)
                     .appendChild(deleteButton);
                 } else {
                     try {
-                        tableBody.rows[filaActual]
+                        tableBody.rows[actualRow]
                         .insertCell(c)
-                        .appendChild(crearElemento(tableObject.cellElement[c]));
+                        .appendChild(createElement(tableObject.cellElement[c]));
                     } catch (exception) {
                         console.log(exception.message);
                     }
@@ -53,7 +54,7 @@ window.onload = function() {
             var deleteRowButtons = document.getElementsByClassName(tableObject.deleteButton.classAttribute);
 
             for (var deleteRowButton of deleteRowButtons) {
-                deleteRowButton.onclick = borrarFila; 
+                deleteRowButton.onclick = deleteRow; 
             }
         };
         
@@ -62,7 +63,7 @@ window.onload = function() {
          * 
          * @param {MouseEvent} event
          */
-        function borrarFila(event) {
+        function deleteRow(event) {
             let table = document.getElementById(event.srcElement.dataset.tableName);
 
             let tableObject = getJsonObject(table.id);
@@ -108,10 +109,10 @@ window.onload = function() {
                 tableBody.deleteRow(event.srcElement.parentElement.parentElement.getAttribute("data-fila"));
             }
 
-            var botonesBorrarFila = document.getElementsByClassName(tableObject.deleteButton.class);
+            var botonesdeleteRow = document.getElementsByClassName(tableObject.deleteButton.class);
 
-            for (var f in botonesBorrarFila) {
-                botonesBorrarFila[f].onclick = borrarFila;
+            for (var f in botonesdeleteRow) {
+                botonesdeleteRow[f].onclick = deleteRow;
             }
         };
 
@@ -120,7 +121,7 @@ window.onload = function() {
          * 
          * @returns {HTMLElementTagNameMap}:    Retorna el objeto DOM del tipo de elemento requerido.
          */
-        function crearElemento(elemento) {
+        function createElement(elemento, activeMassiveDelete = false) {
             var element = document.createElement(elemento.element);
             
             //Se verifica si el elemento name esta definido.
@@ -156,20 +157,22 @@ window.onload = function() {
                 element);
 
             if (element.type == "radio" || element.type == "checkbox") {
-                let randomNumber = Math.round(Math.random() * 1000);
-                element = document.createElement("span");
+                if (!activeMassiveDelete) {
+                    let randomNumber = Math.round(Math.random() * 1000);
+                    element = document.createElement("span");
 
-                if (elemento.radioElements != undefined || elemento.radioElements != null) {
-                    for (var r in elemento.radioElements) {
-                        let radioCheckboxElement = document.createElement(elemento.element);
-                        radioCheckboxElement.setAttribute("type", elemento.type);
-                        radioCheckboxElement.setAttribute(
-                            "name", 
-                            elemento.name.replace('[number]', randomNumber));
-                        radioCheckboxElement.setAttribute("value", elemento.radioElements[r].value);
+                    if (elemento.radioElements != undefined || elemento.radioElements != null) {
+                        for (var r in elemento.radioElements) {
+                            let radioCheckboxElement = document.createElement(elemento.element);
+                            radioCheckboxElement.setAttribute("type", elemento.type);
+                            radioCheckboxElement.setAttribute(
+                                "name", 
+                                elemento.name.replace('[number]', randomNumber));
+                            radioCheckboxElement.setAttribute("value", elemento.radioElements[r].value);
 
-                        element.appendChild(radioCheckboxElement);
-                        element.appendChild(crearElemento(elemento.radioElements[r]));
+                            element.appendChild(radioCheckboxElement);
+                            element.appendChild(createElement(elemento.radioElements[r]));
+                        }
                     }
                 }
             }
@@ -206,6 +209,10 @@ window.onload = function() {
 
         /*
          * Function that validates if a json attribute is defined and has data.
+         * 
+         * @param {String} elementAttribute: Attribute of the JSON object to validate.
+         * @returns {Boolean}: Returns true if the attribute is defined and has 
+         *                     data, otherwise returns false.
          */
         function isDefined(elementAttribute) {
             return (undefined != elementAttribute && null != elementAttribute);
@@ -244,6 +251,32 @@ window.onload = function() {
             }
         }
 
+        function addMassiveDelete(tHead) {
+            try {
+                if (null != tHead && undefined != tHead) {
+                    let actualCells = tHead.children[0].cells;
+                    let newRow = tHead.insertRow(0)
+                            .insertCell(0)
+                            .appendChild(
+                                createElement(
+                                    jsonObject.tables[0].massiveDelete.element
+                                    , jsonObject.tables[0].massiveDelete.active));
+                    let initialCellIndex = 1;
+
+                    for (const index in tHead.children[0].cells) {
+                        console.log(cell.value);
+                        newRow.appendChild(
+                            document.createElement("th")
+                                    .appendChild(document.createTextNode(tHead.children[0].cells[index])));
+                    }
+                } else {
+                    throw new Error("El encabezado de la tabla no esta definido. Verifica que el objeto JSON tenga el atributo tHead definido con el ID del elemento thead de la tabla.");
+                }
+            } catch (exception) {
+                console.error(exception.message);
+            }
+        }
+
         /*
          * A cada fila se le agrega un atributo de tipo dataset para identificar 
          * el número de fila en próximas validaciones. 
@@ -256,9 +289,27 @@ window.onload = function() {
 
             table.setAttribute("data-initial-cells-ammount", initialCellsAmmount);
 
-            for (let row of table.tBodies[0].rows) {
-                row.setAttribute("data-fila", dataRowCount);
-                dataRowCount++;
+            table.tHead.appendChild(addRow(0));
+
+            for (let thRow of table.tHead.rows) {
+                if (t.massiveDelete.active) {
+                    thRow.insertCell().appendChild(
+                        createElement(
+                            t.massiveDelete.element
+                            , t.massiveDelete.active));
+                }
+
+                for (let headerCell of t.tableHeaderCells) {
+                    thRow.insertCell().appendChild(
+                        document.createTextNode(headerCell));
+                }
+            }
+
+            for (let tableBody of table.tBodies) {
+                for (let row of tableBody.rows) {
+                    row.setAttribute("data-fila", dataRowCount);
+                    dataRowCount++;
+                }
             }
 
             createRowButton.setAttribute("data-table-name", t.tableId);

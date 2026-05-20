@@ -21,21 +21,10 @@
         <div>
             <table id="tableOne">
                 <caption class="ActionsMenu">
-                    <button type="button" id="addButton1" class="addButton">+</button>
+                    <button type="button" id="addButton1" class="btnAgregar">+</button>
                 </caption>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Select element</th>
-                        <th>Radio Elements</th>
-                        <th>Checkbox Elements</th>
-                        <th>Datalist</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
+                <thead></thead>
+                <tbody></tbody>
             </table>
         </div>
         <div>
@@ -43,19 +32,8 @@
                 <caption class="ActionsMenu">
                     <button type="button" id="addButton2" class="btnAgregar">+</button>
                 </caption>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Select element</th>
-                        <th>Radio Elements</th>
-                        <th>Checkbox Elements</th>
-                        <th>Datalist</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
+                <thead></thead>
+                <tbody></tbody>
             </table>
         </div>
     </body>
@@ -65,48 +43,58 @@
                 {
                     tableId : "tableOne",
                     addButton : "addButton1",
-                    deleteButton : {
-                        "element":"button"
-                        , "type":"button"
-                        , "classAttribute":"BtnBorrar"
-                        , "name":"btnBorrar"
-                        , "text":"-"},
                     totalCells : 7,
+                    massiveDelete : {
+                        active : true,
+                        element : {
+                            element : "input",
+                            type : "checkbox",
+                            name : "checkbox_deletes_[]"}
+                    },
+                    deleteButton : {
+                        element : "button"
+                        , type : "button"
+                        , classAttribute : "BtnBorrar"
+                        , name : "btnBorrar"
+                        , text : "-"},
+                    tableHeaderCells : ["ID", "Nombre", "Select element", "Radio elements", "Checkbox elements", "Datalist"],
                     cellElement : [
-                        {"element":"input", "type":"text", "class":null, "name":"name[]"},
-                        {"element":"input", "type":"text", "class":null, "name":"lastname[]"},
                         {
-                            "element":"select",
-                            "name":"country[]",
+                            element : "input"
+                            , type : "text" 
+                            , class : null
+                            , name : "name[]"},
+                        {
+                            element : "input"
+                            , type : "text" 
+                            , class :null
+                            , name :"lastname[]"},
+                        {
+                            element :"select",
+                            name :"country[]",
                             "options": [
-                                {"element": "option", "value":"1", "text":"Option 1"},
-                                {"element": "option", "value":"2", "text":"Option 2"},
-                                {"element": "option", "value":"3", "text":"Option 3"},
-                                {"element": "option", "value":"4", "text":"Option 4"},
-                                {"element": "option", "value":"5", "text":"Option 5"},
-                                {"element": "option", "value":"6", "text":"Option 6"}
-                            ]
-                        },
+                                {element : "option", "value":"1", text :"Option 1"},
+                                {element : "option", "value":"2", text :"Option 2"},
+                                {element : "option", "value":"3", text :"Option 3"},
+                                {element : "option", "value":"4", text :"Option 4"},
+                                {element : "option", "value":"5", text :"Option 5"},
+                                {element : "option", "value":"6", text :"Option 6"}]},
                         {
-                            "element":"input",
-                            "type":"radio",
-                            "name":"radio_options_[number]_[]",
-                            "radioElements":[
-                                {"element":"label", "text":"Radio 1", "value": 1},
-                                {"element":"label", "text":"Radio 2", "value": 2},
-                                {"element":"label", "text":"Radio 3", "value": 3}
-                            ]
-                        },
+                            element :"input",
+                            type :"radio",
+                            name :"radio_options_[number]_[]",
+                            radioElements :[
+                                {element :"label", text :"Radio 1", "value": 1},
+                                {element :"label", text :"Radio 2", "value": 2},
+                                {element :"label", text :"Radio 3", "value": 3}]},
                         {
-                            "element":"input",
-                            "type":"checkbox",
-                            "name":"checkbox_options_[number]_[]",
-                            "radioElements":[
-                                {"element":"label", "text":"Checkbox 1", "value": 1},
-                                {"element":"label", "text":"Checkbox 2", "value": 2},
-                                {"element":"label", "text":"Checkbox 3", "value": 3}
-                            ]
-                        },
+                            element :"input",
+                            type :"checkbox",
+                            name :"checkbox_options_[number]_[]",
+                            radioElements :[
+                                {element :"label", text :"Checkbox 1", "value": 1},
+                                {element :"label", text :"Checkbox 2", "value": 2},
+                                {element :"label", text :"Checkbox 3", "value": 3}]},
                         {
                             element : "input", 
                             list : "categories", 
@@ -115,46 +103,54 @@
                     ]
                 },
                 {
-                    "tableId":"tabla2",
-                    "addButton":"addButton2",
-                    "deleteButton":{
-                        "element":"button"
-                        , "type":"button"
-                        , "classAttribute":"BtnBorrar"
-                        , "name":"btnBorrar"
-                        , "text":"-"},
-                    "totalCells":7,
+                    tableId :"tabla2",
+                    addButton :"addButton2",
+                    totalCells :7,
+                    massiveDelete : {
+                        active : true,
+                        element : {
+                            element : "input",
+                            type : "checkbox",
+                            name : "checkbox_deletes_[]"}
+                    },
+                    deleteButton : {
+                        element :"button"
+                        , type :"button"
+                        , classAttribute :"BtnBorrar"
+                        , name :"btnBorrar"
+                        , text :"-"},
+                    tableHeaderCells : ["ID", "Nombre", "Select element", "Radio elements", "Checkbox elements", "Datalist"],
                     "cellElement": [
-                        {"element":"input", "type":"text", "class":null, "name":"name[]"},
-                        {"element":"input", "type":"text", "class":null, "name":"lastname[]"},
+                        {element :"input", type : "text" , class :null, name :"name[]"},
+                        {element :"input", type : "text" , class :null, name :"lastname[]"},
                         {
-                            "element":"select",
-                            "name":"country[]",
+                            element :"select",
+                            name :"country[]",
                             "options": [
-                                {"element": "option", "value":"1", "text":"Option 1"},
-                                {"element": "option", "value":"2", "text":"Option 2"},
-                                {"element": "option", "value":"3", "text":"Option 3"},
-                                {"element": "option", "value":"4", "text":"Option 4"},
-                                {"element": "option", "value":"5", "text":"Option 5"},
-                                {"element": "option", "value":"6", "text":"Option 6"}]
+                                {element : "option", "value":"1", text :"Option 1"},
+                                {element : "option", "value":"2", text :"Option 2"},
+                                {element : "option", "value":"3", text :"Option 3"},
+                                {element : "option", "value":"4", text :"Option 4"},
+                                {element : "option", "value":"5", text :"Option 5"},
+                                {element : "option", "value":"6", text :"Option 6"}]
                         },
                         {
-                            "element":"input",
-                            "type":"radio",
-                            "name":"radio_options_[number]_[]",
-                            "radioElements":[
-                                {"element":"label", "text":"Radio 1", "value": 1},
-                                {"element":"label", "text":"Radio 2", "value": 2},
-                                {"element":"label", "text":"Radio 3", "value": 3}]
+                            element :"input",
+                            type :"radio",
+                            name :"radio_options_[number]_[]",
+                            radioElements :[
+                                {element :"label", text :"Radio 1", "value": 1},
+                                {element :"label", text :"Radio 2", "value": 2},
+                                {element :"label", text :"Radio 3", "value": 3}]
                         },
                         {
-                            "element":"input",
-                            "type":"checkbox",
-                            "name":"checkbox_options_[number]_[]",
-                            "radioElements":[
-                                {"element":"label", "text":"Checkbox 1", "value": 1},
-                                {"element":"label", "text":"Checkbox 2", "value": 2},
-                                {"element":"label", "text":"Checkbox 3", "value": 3}]
+                            element :"input",
+                            type :"checkbox",
+                            name :"checkbox_options_[number]_[]",
+                            radioElements :[
+                                {element :"label", text :"Checkbox 1", "value": 1},
+                                {element :"label", text :"Checkbox 2", "value": 2},
+                                {element :"label", text :"Checkbox 3", "value": 3}]
                         },
                         {
                             element : "input", 
@@ -166,12 +162,12 @@
             ],
             commonOptions : {
                 "options": [
-                    {"element": "option", "value":"Colombia", "text":"Colombia"},
-                    {"element": "option", "value":"Brasil", "text":"Brasil"},
-                    {"element": "option", "value":"Venezuela", "text":"Venezuela"},
-                    {"element": "option", "value":"Perú", "text":"Perú"},
-                    {"element": "option", "value":"Chile", "text":"Chile"},
-                    {"element": "option", "value":"Argentina", "text":"Argentina"}]
+                    {element : "option", "value":"Colombia", text :"Colombia"},
+                    {element : "option", "value":"Brasil", text :"Brasil"},
+                    {element : "option", "value":"Venezuela", text :"Venezuela"},
+                    {element : "option", "value":"Perú", text :"Perú"},
+                    {element : "option", "value":"Chile", text :"Chile"},
+                    {element : "option", "value":"Argentina", text :"Argentina"}]
             }
         };
     </script>
