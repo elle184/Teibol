@@ -156,13 +156,16 @@ window.onload = function() {
                 element);
 
             if (element.type == "radio" || element.type == "checkbox") {
+                let randomNumber = Math.round(Math.random() * 1000);
                 element = document.createElement("span");
 
                 if (elemento.radioElements != undefined || elemento.radioElements != null) {
                     for (var r in elemento.radioElements) {
-                        var radioCheckboxElement = document.createElement(elemento.element);
+                        let radioCheckboxElement = document.createElement(elemento.element);
                         radioCheckboxElement.setAttribute("type", elemento.type);
-                        radioCheckboxElement.setAttribute("name", elemento.name);
+                        radioCheckboxElement.setAttribute(
+                            "name", 
+                            elemento.name.replace('[number]', randomNumber));
                         radioCheckboxElement.setAttribute("value", elemento.radioElements[r].value);
 
                         element.appendChild(radioCheckboxElement);
