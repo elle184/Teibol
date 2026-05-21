@@ -2,9 +2,11 @@ window.onload = function() {
     try {
         const DATALIST = "datalist";
         const SELECT = "select";
+
+        let selectedRowsToDelete = new Array();
         
         /**
-         * 1- Obtener el número de filas
+         * 1- Get the amount of rows.
          * 2- Crear un nuevo elemento de tipo td
          * 3- Obtener el número de celdas de la fila anterior para crear la 
          *    misma cantidad en la nueva fila.
@@ -47,14 +49,16 @@ window.onload = function() {
                 }
             }
 
-            /*
-             * Se obtienen todos los botones que se encargan de borrar su respectiva fila y se les 
-             * agrega la función de borrado.
-             */
-            var deleteRowButtons = document.getElementsByClassName(tableObject.deleteButton.classAttribute);
+            if (tableObject.massiveDelete.active) {
+                tableBody.rows[actualRow].insertCell(0).appendChild(
+                    createElement(tableObject.massiveDelete.element
+                                , tableObject.massiveDelete.active));
 
-            for (var deleteRowButton of deleteRowButtons) {
-                deleteRowButton.onclick = deleteRow; 
+                tableBody
+                    .rows[actualRow]
+                    .cells[0]
+                    .children[0]
+                    .onclick = addCheckedRowEvent.bind(this);
             }
         };
         
@@ -186,7 +190,7 @@ window.onload = function() {
          * @returns {HTMLElementTagNameMap}:    Retorna el objeto DOM de tipo tr
          */
         function addRow(rowNumber) {
-            var fila = document.createElement("tr");
+            let fila = document.createElement("tr");
             fila.setAttribute("data-fila", rowNumber);
 
             return fila;
@@ -251,29 +255,16 @@ window.onload = function() {
             }
         }
 
-        function addMassiveDelete(tHead) {
-            try {
-                if (null != tHead && undefined != tHead) {
-                    let actualCells = tHead.children[0].cells;
-                    let newRow = tHead.insertRow(0)
-                            .insertCell(0)
-                            .appendChild(
-                                createElement(
-                                    jsonObject.tables[0].massiveDelete.element
-                                    , jsonObject.tables[0].massiveDelete.active));
-                    let initialCellIndex = 1;
+        function addCheckedRowEvent(actualRow) {
+            let checkedRow = actualRow.srcElement.parentElement.parentElement;
+            selectedRowsToDelete.push(checkedRow);
+        }
 
-                    for (const index in tHead.children[0].cells) {
-                        console.log(cell.value);
-                        newRow.appendChild(
-                            document.createElement("th")
-                                    .appendChild(document.createTextNode(tHead.children[0].cells[index])));
-                    }
-                } else {
-                    throw new Error("El encabezado de la tabla no esta definido. Verifica que el objeto JSON tenga el atributo tHead definido con el ID del elemento thead de la tabla.");
-                }
-            } catch (exception) {
-                console.error(exception.message);
+        function deleteRows() {
+            console.log(selectedRowsToDelete);
+            for (let row in selectedRowsToDelete) {
+                console.log("trying to delete row: " + selectedRowsToDelete[row]);
+                delete selectedRowsToDelete[row];
             }
         }
 
@@ -289,6 +280,7 @@ window.onload = function() {
 
             table.setAttribute("data-initial-cells-ammount", initialCellsAmmount);
 
+            //Adds a new row into te table header section.
             table.tHead.appendChild(addRow(0));
 
             for (let thRow of table.tHead.rows) {
@@ -314,6 +306,11 @@ window.onload = function() {
 
             createRowButton.setAttribute("data-table-name", t.tableId);
             createRowButton.onclick = createRow;
+
+            if (t.massiveDelete.active) {
+                element = createElement(t.massiveDelete.deleteButton);
+                table.caption.appendChild(element);
+            }
         }
     } catch (excepcion) {
         this.console.error(excepcion.message);

@@ -28,7 +28,7 @@
             </table>
         </div>
         <div>
-            <table id="tabla2">
+            <table id="tablaTwo">
                 <caption class="ActionsMenu">
                     <button type="button" id="addButton2" class="btnAgregar">+</button>
                 </caption>
@@ -40,8 +40,7 @@
     <script type="text/javascript">
         var jsonObject = {
             tables : [
-                {
-                    tableId : "tableOne",
+                {tableId : "tableOne",
                     addButton : "addButton1",
                     totalCells : 7,
                     massiveDelete : {
@@ -49,7 +48,13 @@
                         element : {
                             element : "input",
                             type : "checkbox",
-                            name : "checkbox_deletes_[]"}
+                            name : "checkbox_deletes_[]"},
+                        deleteButton : {
+                            element : "button"
+                            , type : "button"
+                            , classAttribute : "BtnBorrar"
+                            , name : "btnBorrar"
+                            , text : "-"},
                     },
                     deleteButton : {
                         element : "button"
@@ -57,7 +62,13 @@
                         , classAttribute : "BtnBorrar"
                         , name : "btnBorrar"
                         , text : "-"},
-                    tableHeaderCells : ["ID", "Nombre", "Select element", "Radio elements", "Checkbox elements", "Datalist"],
+                    tableHeaderCells : [
+                        "ID"
+                        , "Nombre"
+                        , "Select element"
+                        , "Radio elements"
+                        , "Checkbox elements"
+                        , "Datalist"],
                     cellElement : [
                         {
                             element : "input"
@@ -102,8 +113,7 @@
                         }
                     ]
                 },
-                {
-                    tableId :"tabla2",
+                {tableId :"tablaTwo",
                     addButton :"addButton2",
                     totalCells :7,
                     massiveDelete : {
@@ -111,7 +121,17 @@
                         element : {
                             element : "input",
                             type : "checkbox",
-                            name : "checkbox_deletes_[]"}
+                            name : "checkbox_deletes_[]"},
+                        deleteButton : {
+                            element : "button"
+                            , type : "button"
+                            , classAttribute : "BtnBorrar"
+                            , name : "deleteAllButtton"
+                            , text : "-"
+                            , event : {
+                                type : "click"
+                                , function : "deleteRows"}
+                        },
                     },
                     deleteButton : {
                         element :"button"
