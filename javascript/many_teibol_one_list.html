@@ -52,9 +52,12 @@
                         deleteButton : {
                             element : "button"
                             , type : "button"
+                            , name : "deleteAllButton1"
+                            , id : "deleteAllButton1"
                             , classAttribute : "BtnBorrar"
-                            , name : "btnBorrar"
-                            , text : "-"},
+                            , text : "-"
+                            , event : {type : "click", function : "deleteRows"}
+                        }
                     },
                     deleteButton : {
                         element : "button"
@@ -126,11 +129,10 @@
                             element : "button"
                             , type : "button"
                             , classAttribute : "BtnBorrar"
-                            , name : "deleteAllButtton"
+                            , name : "deleteAllButtton2"
+                            , id : "deleteAllButton2"
                             , text : "-"
-                            , event : {
-                                type : "click"
-                                , function : "deleteRows"}
+                            , event : { type : "click", function : "deleteRows" }
                         },
                     },
                     deleteButton : {

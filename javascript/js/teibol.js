@@ -2,6 +2,7 @@ window.onload = function() {
     try {
         const DATALIST = "datalist";
         const SELECT = "select";
+        const ACTIONS = { "deleteRows" : deleteRows };
 
         let selectedRowsToDelete = new Array();
         
@@ -129,19 +130,13 @@ window.onload = function() {
             var element = document.createElement(elemento.element);
             
             //Se verifica si el elemento name esta definido.
-            if (isDefined(elemento.name)) {
-                element.setAttribute("name", elemento.name);
-            }
+            if (isDefined(elemento.name)) { element.setAttribute("name", elemento.name); }
 
             //Valida que el atributo type este definido.
-            if (isDefined(elemento.type)) {
-                element.setAttribute("type", elemento.type);
-            }
+            if (isDefined(elemento.type)) { element.setAttribute("type", elemento.type); }
 
             //Valida que el atributo class este definido.
-            if (isDefined(elemento.classAttribute)) { 
-                element.setAttribute("class", elemento.classAttribute); 
-            }
+            if (isDefined(elemento.classAttribute)) { element.setAttribute("class", elemento.classAttribute); }
 
             //Se verifica si el elemento text esta definido.
             if (isDefined(elemento.text)) {
@@ -149,9 +144,9 @@ window.onload = function() {
                 element.appendChild(textNode);
             }
 
-            if (isDefined(elemento.list)) {
-                element.setAttribute("list", elemento.list);
-            }
+            if (isDefined(elemento.list)) { element.setAttribute("list", elemento.list); }
+
+            if (isDefined(elemento.id)) { element.setAttribute("id", elemento.id); }
 
             let elementType = (Object.is(SELECT, elemento.element) ? SELECT : DATALIST);
 
@@ -180,6 +175,8 @@ window.onload = function() {
                     }
                 }
             }
+
+            element.addEventListener(elemento.event?.type, ACTIONS[elemento.event?.function]);
 
             return element;
         }
@@ -262,10 +259,16 @@ window.onload = function() {
 
         function deleteRows() {
             console.log(selectedRowsToDelete);
-            for (let row in selectedRowsToDelete) {
-                console.log("trying to delete row: " + selectedRowsToDelete[row]);
-                delete selectedRowsToDelete[row];
-            }
+                for (let row in selectedRowsToDelete) {
+                    let table = document.getElementById(selectedRowsToDelete[row].parentElement?.parentElement?.id);
+
+                    for (let tableBody of table.tBodies) {
+                        tableBody.removeChild(selectedRowsToDelete[row]);
+                    }
+
+                    console.log("trying to delete row from table: " + selectedRowsToDelete[row].parentElement?.parentElement?.id);
+                    //delete selectedRowsToDelete[row];
+                }
         }
 
         /*
@@ -300,6 +303,7 @@ window.onload = function() {
             for (let tableBody of table.tBodies) {
                 for (let row of tableBody.rows) {
                     row.setAttribute("data-fila", dataRowCount);
+                    row.setAttribute("data-table-id", t.tableId);
                     dataRowCount++;
                 }
             }
@@ -310,6 +314,8 @@ window.onload = function() {
             if (t.massiveDelete.active) {
                 element = createElement(t.massiveDelete.deleteButton);
                 table.caption.appendChild(element);
+
+                
             }
         }
     } catch (excepcion) {
