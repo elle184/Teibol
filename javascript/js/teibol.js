@@ -2,10 +2,25 @@ window.onload = function() {
     try {
         const DATALIST = "datalist";
         const SELECT = "select";
-        const ACTIONS = { "deleteRows" : deleteRows };
+        const TABLE = "table";
+        const CHECKBOX = "checkbox";
+        const ACTIONS = { 
+            "deleteRows" : deleteRows 
+            , "selectAllToDelete" : selectAllToDelete
+        };
 
         let selectedRowsToDelete = new Array();
         
+        function getIdFromParentElement(element, parent) {
+            if (isDefined(element)) {
+                if (isDefined(element.parentElement) && parent != element.parentElement.nodeName.toLowerCase()) {
+                    return getIdFromParentElement(element.parentElement, parent);
+                } else {
+                    return element.parentElement.id;
+                }
+            }
+        }
+
         /**
          * 1- Get the amount of rows.
          * 2- Crear un nuevo elemento de tipo td
@@ -258,17 +273,28 @@ window.onload = function() {
         }
 
         function deleteRows() {
-            console.log(selectedRowsToDelete);
-                for (let row in selectedRowsToDelete) {
-                    let table = document.getElementById(selectedRowsToDelete[row].parentElement?.parentElement?.id);
+            for (let row in selectedRowsToDelete) {
+                let table = document.getElementById(
+                    getIdFromParentElement(selectedRowsToDelete[row], TABLE));
 
-                    for (let tableBody of table.tBodies) {
-                        tableBody.removeChild(selectedRowsToDelete[row]);
-                    }
-
-                    console.log("trying to delete row from table: " + selectedRowsToDelete[row].parentElement?.parentElement?.id);
-                    //delete selectedRowsToDelete[row];
+                for (let tableBody of table.tBodies) {
+                    tableBody.removeChild(selectedRowsToDelete[row]);
                 }
+            }
+        }
+
+        function selectAllToDelete(event) {
+            tableId = getIdFromParentElement(event.srcElement, TABLE);
+            let table = document.getElementById(tableId);
+
+            for (let tableBody of table.tBodies) {
+                for (let row of tableBody.rows) {
+                    if (CHECKBOX === row.cells[0]?.children[0]?.type.toLowerCase()) {
+                        row.cells[0].children[0].checked = event.srcElement.checked;
+                        selectedRowsToDelete.push(row);
+                    }
+                }
+            }
         }
 
         /*
@@ -283,7 +309,7 @@ window.onload = function() {
 
             table.setAttribute("data-initial-cells-ammount", initialCellsAmmount);
 
-            //Adds a new row into te table header section.
+            //Adds a new row into the table header section.
             table.tHead.appendChild(addRow(0));
 
             for (let thRow of table.tHead.rows) {
@@ -314,8 +340,6 @@ window.onload = function() {
             if (t.massiveDelete.active) {
                 element = createElement(t.massiveDelete.deleteButton);
                 table.caption.appendChild(element);
-
-                
             }
         }
     } catch (excepcion) {

@@ -46,9 +46,12 @@
                     massiveDelete : {
                         active : true,
                         element : {
-                            element : "input",
-                            type : "checkbox",
-                            name : "checkbox_deletes_[]"},
+                            element : "input"
+                            , type : "checkbox"
+                            , name : "checkbox_deletes_1_[]"
+                            , id : "deleteAllChkOne"
+                            , event : {type : "change", function : "selectAllToDelete"}
+                        },
                         deleteButton : {
                             element : "button"
                             , type : "button"
@@ -122,9 +125,12 @@
                     massiveDelete : {
                         active : true,
                         element : {
-                            element : "input",
-                            type : "checkbox",
-                            name : "checkbox_deletes_[]"},
+                            element : "input"
+                            , type : "checkbox"
+                            , name : "checkbox_deletes_2_[]"
+                            , id : "deleteAllChkTwo"
+                            , event : {type : "change", function : "selectAllToDelete"}
+                        },
                         deleteButton : {
                             element : "button"
                             , type : "button"
